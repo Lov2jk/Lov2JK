@@ -1,0 +1,133 @@
+media:
+  input: assets/images/products
+  output: assets/images/products
+
+content:
+  - name: catalog
+    label: Product catalog
+    type: file
+    path: content/products.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: products
+        label: Products
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name} — {sku}"
+        fields:
+          - name: name
+            label: Product name
+            type: string
+            required: true
+          - name: slug
+            label: URL slug
+            type: string
+            required: true
+            description: Lowercase words joined with hyphens, for example pink-party-dress.
+            pattern:
+              regex: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              message: Use lowercase letters, numbers and hyphens only.
+          - name: description
+            label: Description
+            type: text
+            required: true
+          - name: price
+            label: Regular price
+            type: number
+            required: true
+          - name: offerPrice
+            label: Offer price
+            type: number
+          - name: sku
+            label: SKU
+            type: string
+            required: true
+          - name: stock
+            label: Stock quantity
+            type: number
+            required: true
+          - name: category
+            label: Category
+            type: select
+            required: true
+            options:
+              values: [Dresses, Toys]
+          - name: colors
+            label: Colours
+            type: string
+            list: true
+          - name: sizes
+            label: Sizes
+            type: string
+            list: true
+          - name: ageGroup
+            label: Age group
+            type: string
+          - name: images
+            label: Product images
+            type: image
+            list: true
+          - name: featured
+            label: Show on homepage
+            type: boolean
+          - name: available
+            label: Available to order
+            type: boolean
+
+  - name: store
+    label: Store settings
+    type: file
+    path: content/settings.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - {name: storeName, label: Store name, type: string, required: true}
+      - {name: tagline, label: Tagline, type: string}
+      - name: whatsapp
+        label: WhatsApp number
+        type: string
+        description: Country code and number using digits only, for example 919363529266.
+      - {name: email, label: Business email, type: string}
+      - {name: upiId, label: UPI ID, type: string}
+      - {name: paymentLink, label: Payment link, type: string}
+      - {name: shippingNote, label: Top announcement, type: string}
+      - {name: instagram, label: Instagram URL, type: string}
+      - {name: facebook, label: Facebook URL, type: string}
+      - {name: youtube, label: YouTube URL, type: string}
+      - name: business
+        label: Public business details
+        type: object
+        fields:
+          - {name: trademarkName, label: Trademark name, type: string}
+          - {name: proprietorName, label: Proprietor name, type: string}
+          - {name: companyName, label: Company name, type: string}
+          - {name: address, label: Business address, type: text}
+          - {name: commencementDate, label: Business commencement date, type: string}
+          - {name: nature, label: Nature of business, type: string}
+      - name: marketplaces
+        label: Online marketplaces
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        fields:
+          - {name: name, label: Marketplace name, type: string, required: true}
+          - name: url
+            label: Public store or product URL
+            type: string
+            description: Paste the customer-facing Amazon, Flipkart or other store link.
+          - {name: note, label: Short note, type: string}
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: user
+    templates:
+      update: "Update Lov2JK content: {path}"
