@@ -6,12 +6,7 @@
   "heroDescription": "Thoughtfully selected dresses and playful toys for growing imaginations — shared with care by JK CHENNAI.",
   "whatsapp": "919363529266",
   "email": "jkchennaioffice@gmail.com",
-  "upiId": "",
-  "paymentLink": "",
   "shippingNote": "Friendly support from Chennai — order on WhatsApp",
-  "instagram": "",
-  "facebook": "",
-  "youtube": "",
   "business": {
     "trademarkName": "Lov2JK",
     "proprietorName": "Vanaja Jagannathan",
@@ -21,14 +16,17 @@
     "nature": "Garments & Toys"
   },
   "marketplaces": [
-    {"name": "Amazon.in", "url": "", "note": "Add your public Amazon store or product page link in Admin"}
+    {
+      "name": "Amazon.in",
+      "note": "Add your public Amazon store or product page link in Admin"
+    }
   ],
   "promotion": {
     "enabled": true,
-    "eyebrow": "Special from Lov2JK",
+    "eyebrow": "Expo",
     "title": "A little extra joy",
     "text": "Discover our newest dresses and toys. Message us for current launch offers and combo prices.",
-    "image": "",
+    "image": "assets/images/products/Copilot_20260419_224155.png",
     "buttonLabel": "Shop new arrivals",
     "buttonUrl": "shop.html"
   }
