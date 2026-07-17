@@ -47,6 +47,9 @@
         "4-5Y"
       ],
       "ageGroup": "1-5 years",
+      "images": [
+        "assets/images/products/3.png"
+      ],
       "featured": true,
       "available": true
     },
@@ -63,6 +66,9 @@
         "Multicolor"
       ],
       "ageGroup": "3+ years",
+      "images": [
+        "assets/images/products/2.png"
+      ],
       "featured": true,
       "available": true
     },
