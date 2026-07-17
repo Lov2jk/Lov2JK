@@ -1,0 +1,8 @@
+# Source artwork and private payment material are not part of the public site
+Logo.png
+Logo 1.png
+Gpay QR.jpeg
+
+# Local workspace files
+.codex/
+.agents/

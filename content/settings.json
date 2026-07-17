@@ -1,0 +1,23 @@
+{
+  "storeName": "Lov2JK",
+  "tagline": "Little joys, beautifully picked.",
+  "whatsapp": "919363529266",
+  "email": "jkchennaioffice@gmail.com",
+  "upiId": "",
+  "paymentLink": "",
+  "shippingNote": "Friendly support from Chennai — order on WhatsApp",
+  "instagram": "",
+  "facebook": "",
+  "youtube": "",
+  "business": {
+    "trademarkName": "Lov2JK",
+    "proprietorName": "Vanaja Jagannathan",
+    "companyName": "JK CHENNAI",
+    "address": "No. 2, Ramachandra Nagar, 1st Cross Street, Gerugambakkam, Chennai – 600122",
+    "commencementDate": "22 April 2025",
+    "nature": "Garments & Toys"
+  },
+  "marketplaces": [
+    {"name": "Amazon.in", "url": "", "note": "Add your public Amazon store or product page link in Admin"}
+  ]
+}
