@@ -88,6 +88,9 @@ content:
     fields:
       - {name: storeName, label: Store name, type: string, required: true}
       - {name: tagline, label: Tagline, type: string}
+      - {name: heroEyebrow, label: Homepage small heading, type: string}
+      - {name: heroTitle, label: Homepage main heading, type: string}
+      - {name: heroDescription, label: Homepage introduction, type: text}
       - name: whatsapp
         label: WhatsApp number
         type: string
