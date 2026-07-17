@@ -71,6 +71,35 @@ content:
             label: Product images
             type: image
             list: true
+            description: The first image is the catalog cover. Add more images for the swipeable gallery.
+          - {name: material, label: Material or product details, type: text}
+          - {name: care, label: Care or safety instructions, type: text}
+          - name: sizeGuide
+            label: Size guide
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{size}"
+            description: Optional for dresses. Add the actual garment measurements for each available size.
+            fields:
+              - {name: size, label: Size, type: string, required: true}
+              - {name: chest, label: Chest, type: string}
+              - {name: waist, label: Waist, type: string}
+              - {name: length, label: Length, type: string}
+          - name: reviews
+            label: Customer reviews
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{name} — {rating}/5"
+            description: Add only genuine customer reviews with permission.
+            fields:
+              - {name: name, label: Customer name, type: string, required: true}
+              - {name: rating, label: Rating out of 5, type: number, required: true}
+              - {name: text, label: Review, type: text, required: true}
+              - {name: verified, label: Verified purchase, type: boolean}
           - name: featured
             label: Show on homepage
             type: boolean
@@ -88,6 +117,10 @@ content:
     fields:
       - {name: storeName, label: Store name, type: string, required: true}
       - {name: tagline, label: Tagline, type: string}
+      - name: siteUrl
+        label: Public website URL
+        type: string
+        description: Keep the GitHub Pages URL until your custom domain is connected.
       - {name: heroEyebrow, label: Homepage small heading, type: string}
       - {name: heroTitle, label: Homepage main heading, type: string}
       - {name: heroDescription, label: Homepage introduction, type: text}
@@ -99,6 +132,12 @@ content:
       - {name: upiId, label: UPI ID, type: string}
       - {name: paymentLink, label: Payment link, type: string}
       - {name: shippingNote, label: Top announcement, type: string}
+      - {name: dispatchTime, label: Dispatch estimate, type: string}
+      - {name: deliveryEstimate, label: Delivery estimate, type: string}
+      - name: analyticsMeasurementId
+        label: Google Analytics measurement ID
+        type: string
+        description: Optional. Paste an ID such as G-ABC123 after creating Google Analytics.
       - {name: instagram, label: Instagram URL, type: string}
       - {name: facebook, label: Facebook URL, type: string}
       - {name: youtube, label: YouTube URL, type: string}

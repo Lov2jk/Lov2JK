@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lov2jk.github.io/Lov2JK/sitemap.xml
