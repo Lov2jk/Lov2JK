@@ -132,6 +132,33 @@ content:
       - {name: heroEyebrow, label: Homepage small heading, type: string}
       - {name: heroTitle, label: Homepage main heading, type: string}
       - {name: heroDescription, label: Homepage introduction, type: text}
+      - {name: heroVisualEnabled, label: Show homepage hero visual, type: boolean}
+      - name: heroImage
+        label: Homepage hero image
+        type: image
+        description: Upload, replace or remove the large image shown beside the homepage heading. JPG, PNG, WebP and animated GIF are supported.
+      - {name: heroImageAlt, label: Hero image description, type: string}
+      - name: heroImagePosition
+        label: Hero image position
+        type: select
+        options:
+          values: [center, top, bottom, left, right]
+      - {name: heroCardEnabled, label: Show favourite card on hero image, type: boolean}
+      - {name: heroCardEyebrow, label: Favourite card small heading, type: string}
+      - {name: heroCardTitle, label: Favourite card title, type: string}
+      - {name: heroCardText, label: Favourite card description, type: string}
+      - name: dressesCategoryImage
+        label: Dresses category image
+        type: image
+        description: Optional homepage category image. Remove it to use the colourful background.
+      - {name: dressesCategoryEyebrow, label: Dresses category small heading, type: string}
+      - {name: dressesCategoryTitle, label: Dresses category title, type: string}
+      - name: toysCategoryImage
+        label: Toys category image
+        type: image
+        description: Optional homepage category image. Remove it to use the colourful background.
+      - {name: toysCategoryEyebrow, label: Toys category small heading, type: string}
+      - {name: toysCategoryTitle, label: Toys category title, type: string}
       - name: whatsapp
         label: WhatsApp number
         type: string
