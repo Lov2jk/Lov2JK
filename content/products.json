@@ -1,10 +1,125 @@
 {
   "products": [
-    {"slug":"rose-twirl-dress","name":"Rose Twirl Party Dress","description":"A soft, celebration-ready dress with a comfortable cotton lining and a joyful twirl.","price":1499,"offerPrice":1199,"sku":"L2J-D-001","stock":8,"category":"Dresses","colors":["Rose","Ivory"],"sizes":["2-3Y","4-5Y","6-7Y"],"ageGroup":"2-7 years","images":[],"featured":true,"available":true},
-    {"slug":"sunshine-cotton-frock","name":"Sunshine Cotton Frock","description":"Breathable everyday cotton with playful details, designed for warm Indian days.","price":999,"offerPrice":849,"sku":"L2J-D-002","stock":12,"category":"Dresses","colors":["Yellow","Pink"],"sizes":["1-2Y","2-3Y","4-5Y"],"ageGroup":"1-5 years","images":[],"featured":true,"available":true},
-    {"slug":"woodland-stackers","name":"Woodland Stacking Friends","description":"Chunky, colourful stacking pieces for imaginative, screen-free play.","price":799,"offerPrice":699,"sku":"L2J-T-001","stock":15,"category":"Toys","colors":["Multicolor"],"sizes":[],"ageGroup":"3+ years","images":[],"featured":true,"available":true},
-    {"slug":"little-builder-blocks","name":"Little Builder Blocks","description":"A bright starter block set for building, sorting and creating together.","price":1099,"offerPrice":899,"sku":"L2J-T-002","stock":0,"category":"Toys","colors":["Pastel"],"sizes":[],"ageGroup":"4+ years","images":[],"featured":false,"available":false},
-    {"slug":"moonlight-tulle-dress","name":"Moonlight Tulle Dress","description":"A dreamy occasion dress with gentle sparkle and a soft, non-scratchy lining.","price":1899,"offerPrice":1599,"sku":"L2J-D-003","stock":5,"category":"Dresses","colors":["Lilac","Blue"],"sizes":["4-5Y","6-7Y","8-9Y"],"ageGroup":"4-9 years","images":[],"featured":false,"available":true},
-    {"slug":"cuddle-bunny","name":"Cuddle Bunny Plush","description":"A super-soft huggable friend made for stories, naps and everyday adventures.","price":699,"offerPrice":599,"sku":"L2J-T-003","stock":18,"category":"Toys","colors":["Ivory","Pink"],"sizes":[],"ageGroup":"All ages","images":[],"featured":true,"available":true}
+    {
+      "name": "Rose Twirl Party Dress",
+      "slug": "rose-twirl-dress",
+      "description": "A soft, celebration-ready dress with a comfortable cotton lining and a joyful twirl.",
+      "price": 350,
+      "offerPrice": 250,
+      "sku": "L2J-D-001",
+      "stock": 100,
+      "category": "Dresses",
+      "colors": [
+        "Rose",
+        "Yellow",
+        "Green"
+      ],
+      "sizes": [
+        "2-3Y",
+        "4-5Y",
+        "6-7Y"
+      ],
+      "ageGroup": "2-7 years",
+      "images": [
+        "assets/images/products/1.png",
+        "assets/images/products/1 (1).png"
+      ],
+      "material": "Cotton ",
+      "featured": true,
+      "available": true
+    },
+    {
+      "name": "Sunshine Cotton Frock",
+      "slug": "sunshine-cotton-frock",
+      "description": "Breathable everyday cotton with playful details, designed for warm Indian days.",
+      "price": 999,
+      "offerPrice": 849,
+      "sku": "L2J-D-002",
+      "stock": 12,
+      "category": "Dresses",
+      "colors": [
+        "Yellow",
+        "Pink"
+      ],
+      "sizes": [
+        "1-2Y",
+        "2-3Y",
+        "4-5Y"
+      ],
+      "ageGroup": "1-5 years",
+      "featured": true,
+      "available": true
+    },
+    {
+      "name": "Woodland Stacking Friends",
+      "slug": "woodland-stackers",
+      "description": "Chunky, colourful stacking pieces for imaginative, screen-free play.",
+      "price": 799,
+      "offerPrice": 699,
+      "sku": "L2J-T-001",
+      "stock": 15,
+      "category": "Toys",
+      "colors": [
+        "Multicolor"
+      ],
+      "ageGroup": "3+ years",
+      "featured": true,
+      "available": true
+    },
+    {
+      "name": "Little Builder Blocks",
+      "slug": "little-builder-blocks",
+      "description": "A bright starter block set for building, sorting and creating together.",
+      "price": 1099,
+      "offerPrice": 899,
+      "sku": "L2J-T-002",
+      "stock": 0,
+      "category": "Toys",
+      "colors": [
+        "Pastel"
+      ],
+      "ageGroup": "4+ years",
+      "featured": false,
+      "available": false
+    },
+    {
+      "name": "Moonlight Tulle Dress",
+      "slug": "moonlight-tulle-dress",
+      "description": "A dreamy occasion dress with gentle sparkle and a soft, non-scratchy lining.",
+      "price": 1899,
+      "offerPrice": 1599,
+      "sku": "L2J-D-003",
+      "stock": 5,
+      "category": "Dresses",
+      "colors": [
+        "Lilac",
+        "Blue"
+      ],
+      "sizes": [
+        "4-5Y",
+        "6-7Y",
+        "8-9Y"
+      ],
+      "ageGroup": "4-9 years",
+      "featured": false,
+      "available": true
+    },
+    {
+      "name": "Cuddle Bunny Plush",
+      "slug": "cuddle-bunny",
+      "description": "A super-soft huggable friend made for stories, naps and everyday adventures.",
+      "price": 699,
+      "offerPrice": 599,
+      "sku": "L2J-T-003",
+      "stock": 18,
+      "category": "Toys",
+      "colors": [
+        "Ivory",
+        "Pink"
+      ],
+      "ageGroup": "All ages",
+      "featured": true,
+      "available": true
+    }
   ]
 }
