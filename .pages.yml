@@ -126,6 +126,21 @@ content:
             type: string
             description: Paste the customer-facing Amazon, Flipkart or other store link.
           - {name: note, label: Short note, type: string}
+      - name: promotion
+        label: Advertisement popup
+        type: object
+        description: This popup appears once per browser session. Turn it off when no campaign is running.
+        fields:
+          - {name: enabled, label: Show advertisement popup, type: boolean}
+          - {name: eyebrow, label: Small heading, type: string}
+          - {name: title, label: Main offer heading, type: string}
+          - {name: text, label: Offer or collection message, type: text}
+          - {name: image, label: Advertisement image, type: image}
+          - {name: buttonLabel, label: Button text, type: string}
+          - name: buttonUrl
+            label: Button destination
+            type: string
+            description: Use shop.html for the shop, a product URL, WhatsApp link or another public page.
 
 settings:
   content:

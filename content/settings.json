@@ -22,5 +22,14 @@
   },
   "marketplaces": [
     {"name": "Amazon.in", "url": "", "note": "Add your public Amazon store or product page link in Admin"}
-  ]
+  ],
+  "promotion": {
+    "enabled": true,
+    "eyebrow": "Special from Lov2JK",
+    "title": "A little extra joy",
+    "text": "Discover our newest dresses and toys. Message us for current launch offers and combo prices.",
+    "image": "",
+    "buttonLabel": "Shop new arrivals",
+    "buttonUrl": "shop.html"
+  }
 }
