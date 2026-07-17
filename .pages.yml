@@ -71,7 +71,15 @@ content:
             label: Product images
             type: image
             list: true
-            description: The first image is the catalog cover. Add more images for the swipeable gallery.
+            description: The first image is the catalog cover. JPG, PNG, WebP and animated GIF images are supported.
+          - name: videoUrl
+            label: Product video URL
+            type: string
+            description: Optional. Paste a YouTube link or a direct public MP4/WebM video URL.
+          - name: videoPoster
+            label: Product video cover image
+            type: image
+            description: Optional preview image shown before a direct video starts.
           - {name: material, label: Material or product details, type: text}
           - {name: care, label: Care or safety instructions, type: text}
           - name: sizeGuide
@@ -175,6 +183,14 @@ content:
           - {name: title, label: Main offer heading, type: string}
           - {name: text, label: Offer or collection message, type: text}
           - {name: image, label: Advertisement image, type: image}
+          - name: videoUrl
+            label: Advertisement video URL
+            type: string
+            description: Optional. Paste a YouTube link or direct public MP4/WebM URL. Video replaces the advertisement image when provided.
+          - {name: videoPoster, label: Video cover image, type: image}
+          - {name: videoAutoplay, label: Autoplay video, type: boolean}
+          - {name: videoMuted, label: Mute video, type: boolean}
+          - {name: videoControls, label: Show video controls, type: boolean}
           - {name: buttonLabel, label: Button text, type: string}
           - name: buttonUrl
             label: Button destination
