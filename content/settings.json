@@ -22,7 +22,8 @@
   "marketplaces": [
     {
       "name": "Amazon.in",
-      "note": "Add your public Amazon store or product page link in Admin"
+      "url": "https://www.amazon.in/storefront?me=A3UDDPTTYLJRSD&ref_=ssf_share",
+      "note": "Find our product in Amazon"
     }
   ],
   "promotion": {
@@ -32,7 +33,11 @@
     "text": "Discover our newest dresses and toys. Message us for current launch offers and combo prices.",
     "image": "assets/images/products/Copilot_20260419_224155.png",
     "buttonLabel": "Shop new arrivals",
-    "buttonUrl": "shop.html"
+    "buttonUrl": "shop.html",
+    "videoUrl": "https://youtu.be/9hjekEYw4bc?si=H4SxF_YeOCzPMZgF",
+    "videoAutoplay": false,
+    "videoMuted": false,
+    "videoControls": false
   },
   "upiId": "m.shree.be@oksbi"
 }
