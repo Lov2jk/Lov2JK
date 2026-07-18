@@ -23,6 +23,10 @@ jobs:
           node-version: 22
       - name: Prepare simple Admin lists
         run: node scripts/sync_admin_lists.mjs
+      - name: Install image optimizer
+        run: python -m pip install --disable-pip-version-check pillow
+      - name: Optimize storefront images
+        run: python scripts/optimize_images.py
       - name: Generate sitemap and Merchant feed
         run: python scripts/generate_catalog.py
       - uses: actions/configure-pages@v5

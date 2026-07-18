@@ -69,7 +69,9 @@ If you want the absolute easiest owner workflow, use **Pages CMS** at `app.pages
 
 ## Upload product photos
 
-In Decap, open a product, select **Product images**, and upload JPG or WebP files. The editor saves them to `assets/images/products`. Use portrait images with the same aspect ratio (ideally 4:5), under about 500 KB each, for a neat and fast catalog.
+In the Admin panel, open a product, select **Product images**, and upload JPG, PNG or WebP files. The original upload is preserved. Every GitHub Pages deployment automatically creates smaller WebP storefront copies, so large owner uploads do not slow down customer browsing. Portrait images with a consistent aspect ratio, ideally 4:5, still give the neatest catalog.
+
+Each visible product also receives a permanent `products/product-name.html` page with social preview information. Share that page from the browser so WhatsApp, Facebook and other services can show the product name, description, price and main photo.
 
 ## Update stock and prices
 
