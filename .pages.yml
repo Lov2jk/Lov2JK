@@ -149,11 +149,12 @@ content:
         list:
           collapsible:
             collapsed: true
-            summary: "{name}"
+            summary: "{name} — {sku}"
         description: Open a product, change only its stock quantity, and save.
         fields:
           - {name: name, label: Product name, type: string, hidden: true}
           - {name: slug, label: Product reference, type: string, hidden: true}
+          - {name: sku, label: SKU number, type: string, readonly: true}
           - name: stock
             label: Stock quantity
             type: number
