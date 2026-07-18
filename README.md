@@ -73,6 +73,10 @@ In the Admin panel, open a product, select **Product images**, and upload JPG, P
 
 Each visible product also receives a permanent `products/product-name.html` page with social preview information. Share that page from the browser so WhatsApp, Facebook and other services can show the product name, description, price and main photo.
 
+Every product page and catalog card has a **Share product** button. On supported phones it opens the normal share menu; otherwise it copies the permanent product link.
+
+Buyers can choose 1–5 stars and send a review to the business WhatsApp number. Reviews are not published automatically. After confirming permission and, when supplied, the order reference, add the approved review under **Customer reviews** in the Admin panel and turn on **Verified purchase** when appropriate.
+
 ## Update stock and prices
 
 Use **Quick stock update** for stock and **Quick price update** for regular and offer prices. Set stock to `0` to mark a product sold out automatically. Use **Show or hide products** when preparing a product or temporarily removing it from the shop. New products are connected to these simple lists automatically after the Product catalog is saved. The **Product checklist** reports missing essential information.

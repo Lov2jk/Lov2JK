@@ -9,11 +9,13 @@ const catalog=read('products.json').products||[];
 const previousStock=new Map((read('stock.json').products||[]).map(x=>[x.slug,x]));
 const previousPrices=new Map((read('prices.json').products||[]).map(x=>[x.slug,x]));
 const previousVisibility=new Map((read('visibility.json').products||[]).map(x=>[x.slug,x]));
+const previousReviews=new Map((read('reviews.json').products||[]).map(x=>[x.slug,x]));
 
 const identity=p=>({name:p.name||'Unnamed product',slug:p.slug||'',sku:p.sku||''});
 write('stock.json',{products:catalog.map(p=>({...identity(p),stock:Math.max(0,Number(previousStock.get(p.slug)?.stock??p.stock)||0)}))});
 write('prices.json',{products:catalog.map(p=>({...identity(p),price:Math.max(0,Number(previousPrices.get(p.slug)?.price??p.price)||0),offerPrice:previousPrices.has(p.slug)?previousPrices.get(p.slug).offerPrice:(p.offerPrice??null)}))});
 write('visibility.json',{products:catalog.map(p=>({...identity(p),visible:previousVisibility.has(p.slug)?previousVisibility.get(p.slug).visible!==false:p.visible!==false}))});
+write('reviews.json',{products:catalog.map(p=>({...identity(p),reviews:previousReviews.has(p.slug)?previousReviews.get(p.slug).reviews||[]:p.reviews||[]}))});
 
 const requiredIssues=p=>{
   const issues=[];

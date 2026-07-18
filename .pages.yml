@@ -115,19 +115,6 @@ content:
               - {name: chest, label: Chest, type: string}
               - {name: waist, label: Waist, type: string}
               - {name: length, label: Length, type: string}
-          - name: reviews
-            label: Customer reviews
-            type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: "{name} — {rating}/5"
-            description: Add only genuine customer reviews with permission.
-            fields:
-              - {name: name, label: Customer name, type: string, required: true}
-              - {name: rating, label: Rating out of 5, type: number, required: true}
-              - {name: text, label: Review, type: text, required: true}
-              - {name: verified, label: Verified purchase, type: boolean}
           - name: featured
             label: Show on homepage
             type: boolean
@@ -202,6 +189,43 @@ content:
           - {name: slug, label: Product reference, type: string, hidden: true}
           - {name: sku, label: SKU number, type: string, readonly: true}
           - {name: visible, label: Show on website, type: boolean}
+
+  - name: customer_reviews
+    label: Customer reviews
+    type: file
+    path: content/reviews.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: products
+        label: Reviews by product
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name} — {sku}"
+        description: Add only genuine reviews received from customers with permission.
+        fields:
+          - {name: name, label: Product name, type: string, hidden: true}
+          - {name: slug, label: Product reference, type: string, hidden: true}
+          - {name: sku, label: SKU number, type: string, readonly: true}
+          - name: reviews
+            label: Published reviews
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{name} — {rating}/5"
+            fields:
+              - {name: name, label: Customer name, type: string, required: true}
+              - name: rating
+                label: Star rating out of 5
+                type: number
+                required: true
+                description: Enter a whole number from 1 to 5.
+              - {name: text, label: Review, type: text, required: true}
+              - {name: verified, label: Verified purchase, type: boolean}
 
   - name: product_checklist
     label: Product checklist
