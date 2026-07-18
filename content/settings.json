@@ -8,6 +8,13 @@
   "heroVisualEnabled": true,
   "heroImageAlt": "Featured collection",
   "heroImagePosition": "center",
+  "heroSlideshowEnabled": true,
+  "heroSlideSeconds": 4,
+  "heroImages": [
+    "assets/images/products/1 (1)-1.png",
+    "assets/images/products/1-1.png",
+    "assets/images/products/3-1.png"
+  ],
   "heroCardEnabled": true,
   "heroCardEyebrow": "THIS WEEK'S FAVOURITE",
   "heroCardTitle": "Rose Twirl Dress",
