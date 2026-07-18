@@ -10,7 +10,7 @@ content:
     format: json
     operations:
       delete: false
-    fields:
+    fields: &product_catalog_fields
       - name: products
         label: Products
         type: object
@@ -23,6 +23,15 @@ content:
             label: Product name
             type: string
             required: true
+          - name: stock
+            label: Stock quantity
+            type: number
+            required: true
+            description: Reduce this number after confirming an order.
+          - name: available
+            label: Available to order
+            type: boolean
+            description: Turn this off when the product is sold out or temporarily unavailable.
           - name: slug
             label: URL slug
             type: string
@@ -45,10 +54,6 @@ content:
           - name: sku
             label: SKU
             type: string
-            required: true
-          - name: stock
-            label: Stock quantity
-            type: number
             required: true
           - name: category
             label: Category
@@ -129,9 +134,15 @@ content:
           - name: featured
             label: Show on homepage
             type: boolean
-          - name: available
-            label: Available to order
-            type: boolean
+
+  - name: quick_stock
+    label: Quick stock update
+    type: file
+    path: content/products.json
+    format: json
+    operations:
+      delete: false
+    fields: *product_catalog_fields
 
   - name: store
     label: Store settings
