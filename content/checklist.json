@@ -4,37 +4,43 @@
       "name": "Rose Twirl Party Dress",
       "slug": "rose-twirl-dress",
       "sku": "L2J-D-001",
-      "stock": 100
+      "status": "Ready to sell",
+      "issues": "All essential product information is complete."
     },
     {
       "name": "Sunshine Cotton Frock",
       "slug": "sunshine-cotton-frock",
       "sku": "L2J-D-002",
-      "stock": 12
+      "status": "Ready to sell",
+      "issues": "All essential product information is complete."
     },
     {
       "name": "Woodland Stacking Friends",
       "slug": "woodland-stackers",
       "sku": "L2J-T-001",
-      "stock": 15
+      "status": "Ready to sell",
+      "issues": "All essential product information is complete."
     },
     {
       "name": "Little Builder Blocks",
       "slug": "little-builder-blocks",
       "sku": "L2J-T-002",
-      "stock": 0
+      "status": "Ready to sell",
+      "issues": "All essential product information is complete."
     },
     {
       "name": "Moonlight Tulle Dress",
       "slug": "moonlight-tulle-dress",
       "sku": "L2J-D-003",
-      "stock": 5
+      "status": "Needs attention",
+      "issues": "Missing: Product image"
     },
     {
       "name": "Cuddle Bunny Plush",
       "slug": "cuddle-bunny",
       "sku": "L2J-T-003",
-      "stock": 18
+      "status": "Needs attention",
+      "issues": "Missing: Product image"
     }
   ]
 }

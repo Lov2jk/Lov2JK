@@ -73,7 +73,9 @@ In Decap, open a product, select **Product images**, and upload JPG or WebP file
 
 ## Update stock and prices
 
-Open the product in the admin page, change **Stock quantity**, **Regular price**, **Offer price**, or **Available to order**, then publish. Set stock to `0` and availability off when sold out. Because this is static hosting, always confirm stock on WhatsApp before accepting payment.
+Use **Quick stock update** for stock and **Quick price update** for regular and offer prices. Set stock to `0` to mark a product sold out automatically. Use **Show or hide products** when preparing a product or temporarily removing it from the shop. New products are connected to these simple lists automatically after the Product catalog is saved. The **Product checklist** reports missing essential information.
+
+Use **Homepage & promotions** for hero images, homepage copy, category images and the advertisement popup. Use **Order status messages** for the editable order journey shown on the tracking page.
 
 ## WhatsApp and payments
 

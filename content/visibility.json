@@ -4,37 +4,37 @@
       "name": "Rose Twirl Party Dress",
       "slug": "rose-twirl-dress",
       "sku": "L2J-D-001",
-      "stock": 100
+      "visible": true
     },
     {
       "name": "Sunshine Cotton Frock",
       "slug": "sunshine-cotton-frock",
       "sku": "L2J-D-002",
-      "stock": 12
+      "visible": true
     },
     {
       "name": "Woodland Stacking Friends",
       "slug": "woodland-stackers",
       "sku": "L2J-T-001",
-      "stock": 15
+      "visible": true
     },
     {
       "name": "Little Builder Blocks",
       "slug": "little-builder-blocks",
       "sku": "L2J-T-002",
-      "stock": 0
+      "visible": true
     },
     {
       "name": "Moonlight Tulle Dress",
       "slug": "moonlight-tulle-dress",
       "sku": "L2J-D-003",
-      "stock": 5
+      "visible": true
     },
     {
       "name": "Cuddle Bunny Plush",
       "slug": "cuddle-bunny",
       "sku": "L2J-T-003",
-      "stock": 18
+      "visible": true
     }
   ]
 }

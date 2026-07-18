@@ -8,6 +8,23 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 products = json.loads((ROOT / "content/products.json").read_text(encoding="utf-8"))["products"]
 settings = json.loads((ROOT / "content/settings.json").read_text(encoding="utf-8"))
+def optional_products(filename):
+    path = ROOT / "content" / filename
+    return json.loads(path.read_text(encoding="utf-8")).get("products", []) if path.exists() else []
+
+stock_by_slug = {item.get("slug"): item for item in optional_products("stock.json")}
+price_by_slug = {item.get("slug"): item for item in optional_products("prices.json")}
+visibility_by_slug = {item.get("slug"): item for item in optional_products("visibility.json")}
+for product in products:
+    slug = product.get("slug")
+    if slug in stock_by_slug:
+        product["stock"] = max(0, int(stock_by_slug[slug].get("stock") or 0))
+        product["available"] = product["stock"] > 0
+    if slug in price_by_slug:
+        product["price"] = price_by_slug[slug].get("price") or product.get("price")
+        product["offerPrice"] = price_by_slug[slug].get("offerPrice")
+    product["visible"] = visibility_by_slug.get(slug, {}).get("visible", product.get("visible", True)) is not False
+products = [product for product in products if product.get("visible")]
 base = settings.get("siteUrl") or "https://lov2jk.github.io/Lov2JK/"
 base = base.rstrip("/") + "/"
 today = date.today().isoformat()

@@ -1,0 +1,30 @@
+name: Sync Lov2JK Admin lists
+on:
+  push:
+    branches: [main]
+    paths:
+      - content/products.json
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sync-admin-lists
+  cancel-in-progress: true
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Connect new products to simple Admin lists
+        run: node scripts/sync_admin_lists.mjs
+      - name: Save synchronized Admin lists
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/stock.json content/prices.json content/visibility.json content/checklist.json
+          git commit -m "Sync Admin lists with product catalog"
+          git push

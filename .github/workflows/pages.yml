@@ -18,6 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Prepare simple Admin lists
+        run: node scripts/sync_admin_lists.mjs
       - name: Generate sitemap and Merchant feed
         run: python scripts/generate_catalog.py
       - uses: actions/configure-pages@v5

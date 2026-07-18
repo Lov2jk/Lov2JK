@@ -28,6 +28,13 @@
   "shippingNote": "Friendly support from Chennai — order on WhatsApp",
   "dispatchTime": "Usually dispatched in 1–2 business days",
   "deliveryEstimate": "Typical delivery in 3–7 business days after dispatch",
+  "lowStockThreshold": 3,
+  "orderStatuses": [
+    {"name": "Confirmed", "message": "Your Lov2JK order is confirmed and payment has been received."},
+    {"name": "Packed", "message": "Your Lov2JK order has been packed with care and is ready for dispatch."},
+    {"name": "Shipped", "message": "Your Lov2JK order has been shipped. We will share the tracking link with you."},
+    {"name": "Delivered", "message": "Your Lov2JK order has been delivered. Thank you for shopping with us!"}
+  ],
   "analyticsMeasurementId": "G-55YE4H4E58",
   "business": {
     "trademarkName": "Lov2JK",

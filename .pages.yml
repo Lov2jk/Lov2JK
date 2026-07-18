@@ -24,14 +24,10 @@ content:
             type: string
             required: true
           - name: stock
-            label: Stock quantity
+            label: Starting stock quantity
             type: number
             required: true
-            description: Reduce this number after confirming an order.
-          - name: available
-            label: Available to order
-            type: boolean
-            description: Turn this off when the product is sold out or temporarily unavailable.
+            description: Set this when adding a new product. Use Quick stock update for later changes.
           - name: slug
             label: URL slug
             type: string
@@ -45,11 +41,12 @@ content:
             type: text
             required: true
           - name: price
-            label: Regular price
+            label: Starting regular price
             type: number
             required: true
+            description: Set this when adding a new product. Use Quick price update for later changes.
           - name: offerPrice
-            label: Offer price
+            label: Starting offer price
             type: number
           - name: sku
             label: SKU
@@ -161,6 +158,147 @@ content:
             required: true
             description: Set this to 0 when sold out. The website availability changes automatically.
 
+  - name: quick_prices
+    label: Quick price update
+    type: file
+    path: content/prices.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: products
+        label: Product prices
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name} — {sku}"
+        description: Change regular and offer prices here. Leave offer price empty when there is no discount.
+        fields:
+          - {name: name, label: Product name, type: string, hidden: true}
+          - {name: slug, label: Product reference, type: string, hidden: true}
+          - {name: sku, label: SKU number, type: string, readonly: true}
+          - {name: price, label: Regular price, type: number, required: true}
+          - {name: offerPrice, label: Offer price, type: number}
+
+  - name: product_visibility
+    label: Show or hide products
+    type: file
+    path: content/visibility.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: products
+        label: Website visibility
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name} — {sku}"
+        description: Turn off Show on website to prepare or temporarily hide a product.
+        fields:
+          - {name: name, label: Product name, type: string, hidden: true}
+          - {name: slug, label: Product reference, type: string, hidden: true}
+          - {name: sku, label: SKU number, type: string, readonly: true}
+          - {name: visible, label: Show on website, type: boolean}
+
+  - name: product_checklist
+    label: Product checklist
+    type: file
+    path: content/checklist.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: products
+        label: Product setup status
+        type: object
+        readonly: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name} — {status}"
+        description: This report updates automatically after the Product catalog changes.
+        fields:
+          - {name: name, label: Product name, type: string}
+          - {name: sku, label: SKU number, type: string}
+          - {name: status, label: Status, type: string}
+          - {name: issues, label: Checklist result, type: text}
+          - {name: slug, label: Product reference, type: string, hidden: true}
+
+  - name: homepage
+    label: Homepage & promotions
+    type: file
+    path: content/settings.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - {name: heroEyebrow, label: Homepage small heading, type: string}
+      - {name: heroTitle, label: Homepage main heading, type: string}
+      - {name: heroDescription, label: Homepage introduction, type: text}
+      - {name: heroVisualEnabled, label: Show homepage hero visual, type: boolean}
+      - name: heroImages
+        label: Homepage hero slideshow images
+        type: image
+        list: true
+        description: Add, remove and reorder images here.
+      - {name: heroSlideshowEnabled, label: Automatically move homepage images, type: boolean}
+      - {name: heroSlideSeconds, label: Seconds between homepage images, type: number}
+      - {name: heroImageAlt, label: Hero image description, type: string}
+      - name: heroImagePosition
+        label: Hero image position
+        type: select
+        options:
+          values: [center, top, bottom, left, right]
+      - {name: heroCardEnabled, label: Show favourite card on hero image, type: boolean}
+      - {name: heroCardEyebrow, label: Favourite card small heading, type: string}
+      - {name: heroCardTitle, label: Favourite card title, type: string}
+      - {name: heroCardText, label: Favourite card description, type: string}
+      - {name: dressesCategoryImage, label: Dresses category image, type: image}
+      - {name: dressesCategoryEyebrow, label: Dresses category small heading, type: string}
+      - {name: dressesCategoryTitle, label: Dresses category title, type: string}
+      - {name: toysCategoryImage, label: Toys category image, type: image}
+      - {name: toysCategoryEyebrow, label: Toys category small heading, type: string}
+      - {name: toysCategoryTitle, label: Toys category title, type: string}
+      - name: promotion
+        label: Advertisement popup
+        type: object
+        fields:
+          - {name: enabled, label: Show advertisement popup, type: boolean}
+          - {name: eyebrow, label: Small heading, type: string}
+          - {name: title, label: Main offer heading, type: string}
+          - {name: text, label: Offer or collection message, type: text}
+          - {name: image, label: Advertisement image, type: image}
+          - {name: videoUrl, label: Advertisement video URL, type: string}
+          - {name: videoPoster, label: Video cover image, type: image}
+          - {name: videoAutoplay, label: Autoplay video, type: boolean}
+          - {name: videoMuted, label: Mute video, type: boolean}
+          - {name: videoControls, label: Show video controls, type: boolean}
+          - {name: buttonLabel, label: Button text, type: string}
+          - {name: buttonUrl, label: Button destination, type: string}
+
+  - name: order_status_messages
+    label: Order status messages
+    type: file
+    path: content/settings.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: orderStatuses
+        label: WhatsApp order status templates
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        description: Edit the status names and messages used on the order tracking information page.
+        fields:
+          - {name: name, label: Status name, type: string, required: true}
+          - {name: message, label: Customer message, type: text, required: true}
+
   - name: store
     label: Store settings
     type: file
@@ -175,47 +313,6 @@ content:
         label: Public website URL
         type: string
         description: Keep the GitHub Pages URL until your custom domain is connected.
-      - {name: heroEyebrow, label: Homepage small heading, type: string}
-      - {name: heroTitle, label: Homepage main heading, type: string}
-      - {name: heroDescription, label: Homepage introduction, type: text}
-      - {name: heroVisualEnabled, label: Show homepage hero visual, type: boolean}
-      - name: heroImage
-        label: Homepage hero fallback image
-        type: image
-        description: Used only when the slideshow image list below is empty. JPG, PNG, WebP and animated GIF are supported.
-      - name: heroImages
-        label: Homepage hero slideshow images
-        type: image
-        list: true
-        description: Add, remove and reorder images here. They move automatically from right to left.
-      - {name: heroSlideshowEnabled, label: Automatically move homepage images, type: boolean, default: true}
-      - name: heroSlideSeconds
-        label: Seconds between homepage images
-        type: number
-        default: 4
-        description: Recommended value is 4.
-      - {name: heroImageAlt, label: Hero image description, type: string}
-      - name: heroImagePosition
-        label: Hero image position
-        type: select
-        options:
-          values: [center, top, bottom, left, right]
-      - {name: heroCardEnabled, label: Show favourite card on hero image, type: boolean}
-      - {name: heroCardEyebrow, label: Favourite card small heading, type: string}
-      - {name: heroCardTitle, label: Favourite card title, type: string}
-      - {name: heroCardText, label: Favourite card description, type: string}
-      - name: dressesCategoryImage
-        label: Dresses category image
-        type: image
-        description: Optional homepage category image. Remove it to use the colourful background.
-      - {name: dressesCategoryEyebrow, label: Dresses category small heading, type: string}
-      - {name: dressesCategoryTitle, label: Dresses category title, type: string}
-      - name: toysCategoryImage
-        label: Toys category image
-        type: image
-        description: Optional homepage category image. Remove it to use the colourful background.
-      - {name: toysCategoryEyebrow, label: Toys category small heading, type: string}
-      - {name: toysCategoryTitle, label: Toys category title, type: string}
       - name: whatsapp
         label: WhatsApp number
         type: string
@@ -226,6 +323,10 @@ content:
       - {name: shippingNote, label: Top announcement, type: string}
       - {name: dispatchTime, label: Dispatch estimate, type: string}
       - {name: deliveryEstimate, label: Delivery estimate, type: string}
+      - name: lowStockThreshold
+        label: Low-stock warning quantity
+        type: number
+        description: Products at or below this quantity show an Only a few left message. Use 0 to disable the warning.
       - name: analyticsMeasurementId
         label: Google Analytics measurement ID
         type: string
@@ -257,29 +358,6 @@ content:
             type: string
             description: Paste the customer-facing Amazon, Flipkart or other store link.
           - {name: note, label: Short note, type: string}
-      - name: promotion
-        label: Advertisement popup
-        type: object
-        description: This popup appears once per browser session. Turn it off when no campaign is running.
-        fields:
-          - {name: enabled, label: Show advertisement popup, type: boolean}
-          - {name: eyebrow, label: Small heading, type: string}
-          - {name: title, label: Main offer heading, type: string}
-          - {name: text, label: Offer or collection message, type: text}
-          - {name: image, label: Advertisement image, type: image}
-          - name: videoUrl
-            label: Advertisement video URL
-            type: string
-            description: Optional. Paste a YouTube link or direct public MP4/WebM URL. Video replaces the advertisement image when provided.
-          - {name: videoPoster, label: Video cover image, type: image}
-          - {name: videoAutoplay, label: Autoplay video, type: boolean}
-          - {name: videoMuted, label: Mute video, type: boolean}
-          - {name: videoControls, label: Show video controls, type: boolean}
-          - {name: buttonLabel, label: Button text, type: string}
-          - name: buttonUrl
-            label: Button destination
-            type: string
-            description: Use shop.html for the shop, a product URL, WhatsApp link or another public page.
 
 settings:
   content:
