@@ -10,7 +10,7 @@ content:
     format: json
     operations:
       delete: false
-    fields: &product_catalog_fields
+    fields:
       - name: products
         label: Products
         type: object
@@ -138,11 +138,27 @@ content:
   - name: quick_stock
     label: Quick stock update
     type: file
-    path: content/products.json
+    path: content/stock.json
     format: json
     operations:
       delete: false
-    fields: *product_catalog_fields
+    fields:
+      - name: products
+        label: Stock quantities
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{name}"
+        description: Open a product, change only its stock quantity, and save.
+        fields:
+          - {name: name, label: Product name, type: string, hidden: true}
+          - {name: slug, label: Product reference, type: string, hidden: true}
+          - name: stock
+            label: Stock quantity
+            type: number
+            required: true
+            description: Set this to 0 when sold out. The website availability changes automatically.
 
   - name: store
     label: Store settings

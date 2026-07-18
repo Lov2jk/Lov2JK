@@ -1,0 +1,10 @@
+{
+  "products": [
+    {"name": "Rose Twirl Party Dress", "slug": "rose-twirl-dress", "stock": 100},
+    {"name": "Sunshine Cotton Frock", "slug": "sunshine-cotton-frock", "stock": 12},
+    {"name": "Woodland Stacking Friends", "slug": "woodland-stackers", "stock": 15},
+    {"name": "Little Builder Blocks", "slug": "little-builder-blocks", "stock": 0},
+    {"name": "Moonlight Tulle Dress", "slug": "moonlight-tulle-dress", "stock": 5},
+    {"name": "Cuddle Bunny Plush", "slug": "cuddle-bunny", "stock": 18}
+  ]
+}
