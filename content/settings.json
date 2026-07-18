@@ -7,7 +7,7 @@
   "heroDescription": "Thoughtfully selected dresses and playful toys for growing imaginations — shared with care by JK CHENNAI.",
   "heroVisualEnabled": true,
   "heroImageAlt": "Featured collection",
-  "heroImagePosition": "left",
+  "heroImagePosition": "center",
   "heroCardEnabled": true,
   "heroCardEyebrow": "THIS WEEK'S FAVOURITE",
   "heroCardTitle": "Rose Twirl Dress",
@@ -49,5 +49,8 @@
     "videoMuted": true,
     "videoControls": true
   },
-  "upiId": "m.shree.be@oksbi"
+  "upiId": "m.shree.be@oksbi",
+  "heroImage": "assets/images/products/1 (1)-1.png",
+  "dressesCategoryImage": "assets/images/products/Copilot_20260419_224155-1.png",
+  "toysCategoryImage": "assets/images/products/Copilot_20260419_224155-1.png"
 }
