@@ -72,6 +72,18 @@ content:
             type: image
             list: true
             description: The first image is the catalog cover. JPG, PNG, WebP and animated GIF images are supported.
+          - name: imageFit
+            label: Product image display
+            type: select
+            options:
+              values: [cover, contain]
+            description: Cover automatically fills and crops the frame. Contain shows the complete image without cropping.
+          - name: imagePosition
+            label: Product image crop position
+            type: select
+            options:
+              values: [center, top, bottom, left, right]
+            description: Choose which part of the image remains visible when Cover is selected.
           - name: videoUrl
             label: Product video URL
             type: string
