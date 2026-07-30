@@ -28,9 +28,10 @@ for product in products:
 products = [product for product in products if product.get("visible")]
 base = settings.get("siteUrl") or "https://lov2jk.github.io/Lov2JK/"
 base = base.rstrip("/") + "/"
+brand = settings.get("storeName") or "JK Chennai"
 today = date.today().isoformat()
 
-homepage_image = (settings.get("heroImages") or [settings.get("heroImage") or "assets/images/lov2jk-logo.webp"])[0]
+homepage_image = (settings.get("heroImages") or [settings.get("heroImage") or ""])[0]
 if not str(homepage_image).startswith(("http://", "https://")):
     homepage_image = base + quote(str(homepage_image).lstrip("/"), safe="/")
 index_path = ROOT / "index.html"
@@ -67,7 +68,7 @@ for p in products:
         ("g:availability", "in_stock" if p.get("available") and int(p.get("stock") or 0) > 0 else "out_of_stock"),
         ("g:price", f"{regular_price} INR"),
         ("g:condition", "new"),
-        ("g:brand", "Lov2JK"),
+        ("g:brand", brand),
         ("g:product_type", category),
         ("g:identifier_exists", "no"),
     ]
@@ -88,7 +89,7 @@ for p in products:
     items.append(f"<item>{body}</item>")
 
 feed = '<?xml version="1.0" encoding="UTF-8"?>\n<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0"><channel>'
-feed += f"<title>{escape(settings.get('storeName', 'Lov2JK'))}</title><link>{escape(base)}</link><description>{escape(settings.get('tagline', 'Lov2JK product catalog'))}</description>"
+feed += f"<title>{escape(brand)}</title><link>{escape(base)}</link><description>{escape(settings.get('tagline', 'JK Chennai product catalog'))}</description>"
 feed += "".join(items) + "</channel></rss>\n"
 (ROOT / "merchant-feed.xml").write_text(feed, encoding="utf-8")
 
@@ -99,13 +100,13 @@ for old_page in product_pages.glob("*.html"):
 for p in products:
     slug = str(p["slug"])
     link = base + "products/" + quote(slug) + ".html"
-    image = (p.get("images") or ["assets/images/lov2jk-logo.webp"])[0]
+    image = (p.get("images") or [homepage_image])[0]
     if not image.startswith(("http://", "https://")):
         image = base + image.lstrip("/")
-    title = f"{p.get('name', 'Product')} | Lov2JK"
-    description = str(p.get("description") or settings.get("tagline") or "Lov2JK dresses and toys")
+    title = f"{p.get('name', 'Product')} | {brand}"
+    description = str(p.get("description") or settings.get("tagline") or "JK Chennai dresses and toys")
     price = p.get("offerPrice") or p.get("price") or 0
-    document = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../"><title>{escape(title)}</title><meta name="description" content="{escape(description, quote=True)}"><link rel="canonical" href="{escape(link, quote=True)}"><meta property="og:type" content="product"><meta property="og:site_name" content="Lov2JK"><meta property="og:title" content="{escape(title, quote=True)}"><meta property="og:description" content="{escape(description, quote=True)}"><meta property="og:url" content="{escape(link, quote=True)}"><meta property="og:image" content="{escape(image, quote=True)}"><meta property="product:price:amount" content="{escape(str(price), quote=True)}"><meta property="product:price:currency" content="INR"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{escape(title, quote=True)}"><meta name="twitter:description" content="{escape(description, quote=True)}"><meta name="twitter:image" content="{escape(image, quote=True)}"><link rel="stylesheet" href="assets/css/styles.css"></head><body data-page="product" data-product-slug="{escape(slug, quote=True)}"><div id="app"></div><script src="assets/js/app.js" defer></script></body></html>'''
+    document = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../"><title>{escape(title)}</title><meta name="description" content="{escape(description, quote=True)}"><link rel="canonical" href="{escape(link, quote=True)}"><meta property="og:type" content="product"><meta property="og:site_name" content="{escape(brand, quote=True)}"><meta property="og:title" content="{escape(title, quote=True)}"><meta property="og:description" content="{escape(description, quote=True)}"><meta property="og:url" content="{escape(link, quote=True)}"><meta property="og:image" content="{escape(image, quote=True)}"><meta property="product:price:amount" content="{escape(str(price), quote=True)}"><meta property="product:price:currency" content="INR"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{escape(title, quote=True)}"><meta name="twitter:description" content="{escape(description, quote=True)}"><meta name="twitter:image" content="{escape(image, quote=True)}"><link rel="stylesheet" href="assets/css/styles.css"></head><body data-page="product" data-product-slug="{escape(slug, quote=True)}"><div id="app"></div><script src="assets/js/app.js" defer></script></body></html>'''
     (product_pages / f"{slug}.html").write_text(document, encoding="utf-8")
 
 print(f"Generated sitemap, Merchant feed and {len(products)} social-ready product pages")

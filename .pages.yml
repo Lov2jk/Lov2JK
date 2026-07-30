@@ -362,7 +362,7 @@ content:
         label: Public business details
         type: object
         fields:
-          - {name: trademarkName, label: Trademark name, type: string}
+          - {name: trademarkName, label: Brand name, type: string}
           - {name: proprietorName, label: Proprietor name, type: string}
           - {name: companyName, label: Company name, type: string}
           - {name: address, label: Business address, type: text}
@@ -389,4 +389,4 @@ settings:
   commit:
     identity: user
     templates:
-      update: "Update Lov2JK content: {path}"
+      update: "Update JK Chennai content: {path}"

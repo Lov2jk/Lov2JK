@@ -1,6 +1,6 @@
-# Lov2JK store catalog
+# JK Chennai store catalog
 
-A mobile-first static catalog for **Lov2JK**, a JK Chennai brand. It is designed for GitHub Pages: no database, server, monthly hosting bill or complex checkout backend.
+A mobile-first static catalog for **JK Chennai**. It is designed for GitHub Pages: no database, server, monthly hosting bill or complex checkout backend.
 
 ## Recommended setup
 

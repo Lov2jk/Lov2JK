@@ -1,5 +1,5 @@
 {
-  "storeName": "Lov2JK",
+  "storeName": "JK Chennai",
   "tagline": "Little joys, beautifully picked.",
   "siteUrl": "https://lov2jk.github.io/Lov2JK/",
   "heroEyebrow": "Dresses & toys for happy childhoods",
@@ -30,14 +30,14 @@
   "deliveryEstimate": "Typical delivery in 3–7 business days after dispatch",
   "lowStockThreshold": 3,
   "orderStatuses": [
-    {"name": "Confirmed", "message": "Your Lov2JK order is confirmed and payment has been received."},
-    {"name": "Packed", "message": "Your Lov2JK order has been packed with care and is ready for dispatch."},
-    {"name": "Shipped", "message": "Your Lov2JK order has been shipped. We will share the tracking link with you."},
-    {"name": "Delivered", "message": "Your Lov2JK order has been delivered. Thank you for shopping with us!"}
+    {"name": "Confirmed", "message": "Your JK Chennai order is confirmed and payment has been received."},
+    {"name": "Packed", "message": "Your JK Chennai order has been packed with care and is ready for dispatch."},
+    {"name": "Shipped", "message": "Your JK Chennai order has been shipped. We will share the tracking link with you."},
+    {"name": "Delivered", "message": "Your JK Chennai order has been delivered. Thank you for shopping with us!"}
   ],
   "analyticsMeasurementId": "G-55YE4H4E58",
   "business": {
-    "trademarkName": "Lov2JK",
+    "trademarkName": "JK Chennai",
     "proprietorName": "Vanaja Jagannathan",
     "companyName": "JK CHENNAI",
     "address": "No. 2, Ramachandra Nagar, 1st Cross Street, Gerugambakkam, Chennai – 600122",
