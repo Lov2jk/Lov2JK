@@ -3,6 +3,50 @@ media:
   output: assets/images/products
 
 content:
+  - name: categories
+    label: Categories & subcategories
+    type: collection
+    path: content/categories
+    format: json
+    filename: "{fields.slug}.json"
+    view:
+      primary: name
+      fields: [name, parent, visible, order]
+      sort: order
+      order: asc
+    fields:
+      - {name: name, label: Category name, type: string, required: true}
+      - name: slug
+        label: Category URL name
+        type: string
+        required: true
+        description: Lowercase words joined with hyphens, for example ladies-office-wear. Do not change this after assigning products.
+        pattern:
+          regex: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          message: Use lowercase letters, numbers and hyphens only.
+      - name: parent
+        label: Parent category
+        type: reference
+        description: Leave empty for a main category such as Dresses or Toys. Choose Dresses, Ladies or Kids when creating a subcategory.
+        options:
+          collection: categories
+          search: "name,slug"
+          value: "{fields.slug}"
+          label: "{fields.name}"
+      - {name: description, label: Short description, type: text}
+      - {name: image, label: Category image, type: image}
+      - name: order
+        label: Display order
+        type: number
+        required: true
+        default: 10
+        description: Smaller numbers appear first.
+      - name: visible
+        label: Show on website
+        type: boolean
+        default: true
+        description: Turn this off to prepare a future category without showing it to customers.
+
   - name: catalog
     label: Product catalog
     type: file
@@ -54,10 +98,14 @@ content:
             required: true
           - name: category
             label: Category
-            type: select
+            type: reference
             required: true
+            description: Choose the most specific category. The product will automatically appear in all parent categories too.
             options:
-              values: [Dresses, Toys]
+              collection: categories
+              search: "name,slug,parent"
+              value: "{fields.slug}"
+              label: "{fields.name}"
           - name: colors
             label: Colours
             type: string

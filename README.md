@@ -42,14 +42,24 @@ GitHub creates the `CNAME` file when the domain is saved in Settings. Do not add
 
 ## Product admin without coding
 
-Open `https://YOUR-DOMAIN/admin/` after Decap authentication is configured. Select **Product catalog → Products**. From there you can add, reorder, edit or delete products and publish changes.
+Open your Pages CMS dashboard. Select **Categories & subcategories** to manage the shop structure, or **Product catalog → Products** to manage products.
+
+### Add a category or subcategory
+
+1. Open **Categories & subcategories** and choose **Add entry**.
+2. Enter the category name and a lowercase URL name such as `ladies-casual-wear`.
+3. Leave **Parent category** empty for a main category, or select its parent to create a subcategory.
+4. Add an optional image and description, choose the display order, and keep **Show on website** enabled.
+5. Save. The navigation, homepage main categories, shop filter and parent-category results update automatically after publishing.
+
+Use no more than three levels. Assign each product to the most specific category; it will also appear automatically under every parent category. Hide a future category instead of deleting it while products still use it.
 
 Each product includes:
 
 - name, URL slug and description
 - regular price and offer price
 - SKU and stock quantity
-- dresses/toys category
+- admin-managed category and subcategory
 - colours, sizes and age group
 - one or more images
 - homepage featured switch

@@ -1,0 +1,9 @@
+{
+  "name": "Toys",
+  "slug": "toys",
+  "parent": "",
+  "description": "Playful toys for learning and imagination.",
+  "image": "",
+  "order": 2,
+  "visible": true
+}

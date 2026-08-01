@@ -1,0 +1,9 @@
+{
+  "name": "Men",
+  "slug": "men",
+  "parent": "dresses",
+  "description": "Future clothing collection for men.",
+  "image": "",
+  "order": 30,
+  "visible": false
+}

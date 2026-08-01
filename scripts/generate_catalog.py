@@ -9,6 +9,28 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 products = json.loads((ROOT / "content/products.json").read_text(encoding="utf-8"))["products"]
 settings = json.loads((ROOT / "content/settings.json").read_text(encoding="utf-8"))
+category_dir = ROOT / "content" / "categories"
+categories = []
+for category_file in sorted(category_dir.glob("*.json")):
+    category = json.loads(category_file.read_text(encoding="utf-8"))
+    if category.get("slug"):
+        categories.append(category)
+categories.sort(key=lambda item: (int(item.get("order") or 999), str(item.get("name") or "")))
+(ROOT / "content" / "category-index.json").write_text(
+    json.dumps({"categories": categories}, indent=2, ensure_ascii=False) + "\n",
+    encoding="utf-8",
+)
+category_by_slug = {item.get("slug"): item for item in categories}
+
+def category_path(slug):
+    names, seen = [], set()
+    while slug and slug not in seen and slug in category_by_slug:
+        seen.add(slug)
+        item = category_by_slug[slug]
+        names.append(item.get("name") or slug)
+        slug = item.get("parent") or ""
+    return list(reversed(names))
+
 def optional_products(filename):
     path = ROOT / "content" / filename
     return json.loads(path.read_text(encoding="utf-8")).get("products", []) if path.exists() else []
@@ -59,7 +81,8 @@ for p in products:
         image = base + image.lstrip("/")
     regular_price = p.get("price") or 0
     offer_price = p.get("offerPrice") or 0
-    category = "Apparel & Accessories > Clothing > Dresses" if p.get("category") == "Dresses" else "Toys & Games > Toys"
+    hierarchy = category_path(p.get("category"))
+    category = " > ".join(hierarchy) if hierarchy else str(p.get("category") or "General")
     fields = [
         ("g:id", p.get("sku") or p.get("slug")),
         ("title", p.get("name")),
@@ -109,4 +132,4 @@ for p in products:
     document = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../"><title>{escape(title)}</title><meta name="description" content="{escape(description, quote=True)}"><link rel="canonical" href="{escape(link, quote=True)}"><meta property="og:type" content="product"><meta property="og:site_name" content="{escape(brand, quote=True)}"><meta property="og:title" content="{escape(title, quote=True)}"><meta property="og:description" content="{escape(description, quote=True)}"><meta property="og:url" content="{escape(link, quote=True)}"><meta property="og:image" content="{escape(image, quote=True)}"><meta property="product:price:amount" content="{escape(str(price), quote=True)}"><meta property="product:price:currency" content="INR"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{escape(title, quote=True)}"><meta name="twitter:description" content="{escape(description, quote=True)}"><meta name="twitter:image" content="{escape(image, quote=True)}"><link rel="stylesheet" href="assets/css/styles.css"></head><body data-page="product" data-product-slug="{escape(slug, quote=True)}"><div id="app"></div><script src="assets/js/app.js" defer></script></body></html>'''
     (product_pages / f"{slug}.html").write_text(document, encoding="utf-8")
 
-print(f"Generated sitemap, Merchant feed and {len(products)} social-ready product pages")
+print(f"Generated {len(categories)} categories, sitemap, Merchant feed and {len(products)} social-ready product pages")

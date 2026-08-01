@@ -1,0 +1,9 @@
+{
+  "name": "Kids",
+  "slug": "kids",
+  "parent": "dresses",
+  "description": "Colourful, comfortable clothing for children.",
+  "image": "",
+  "order": 20,
+  "visible": true
+}

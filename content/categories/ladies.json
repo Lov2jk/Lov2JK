@@ -1,0 +1,9 @@
+{
+  "name": "Ladies",
+  "slug": "ladies",
+  "parent": "dresses",
+  "description": "Comfortable and stylish clothing for women.",
+  "image": "",
+  "order": 10,
+  "visible": true
+}

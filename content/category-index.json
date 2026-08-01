@@ -1,0 +1,103 @@
+{
+  "categories": [
+    {
+      "name": "Dresses",
+      "slug": "dresses",
+      "parent": "",
+      "description": "Dresses for every age and occasion.",
+      "image": "",
+      "order": 1,
+      "visible": true
+    },
+    {
+      "name": "Toys",
+      "slug": "toys",
+      "parent": "",
+      "description": "Playful toys for learning and imagination.",
+      "image": "",
+      "order": 2,
+      "visible": true
+    },
+    {
+      "name": "Ladies",
+      "slug": "ladies",
+      "parent": "dresses",
+      "description": "Comfortable and stylish clothing for women.",
+      "image": "",
+      "order": 10,
+      "visible": true
+    },
+    {
+      "name": "T-Shirts",
+      "slug": "ladies-t-shirts",
+      "parent": "ladies",
+      "description": "Everyday T-shirts for women.",
+      "image": "",
+      "order": 11,
+      "visible": true
+    },
+    {
+      "name": "Office Wear",
+      "slug": "ladies-office-wear",
+      "parent": "ladies",
+      "description": "Smart and comfortable office wear.",
+      "image": "",
+      "order": 12,
+      "visible": true
+    },
+    {
+      "name": "Kids",
+      "slug": "kids",
+      "parent": "dresses",
+      "description": "Colourful, comfortable clothing for children.",
+      "image": "",
+      "order": 20,
+      "visible": true
+    },
+    {
+      "name": "Frocks",
+      "slug": "kids-frocks",
+      "parent": "kids",
+      "description": "Playful frocks for everyday joy.",
+      "image": "",
+      "order": 21,
+      "visible": true
+    },
+    {
+      "name": "Party Wear",
+      "slug": "kids-party-wear",
+      "parent": "kids",
+      "description": "Celebration-ready dresses for children.",
+      "image": "",
+      "order": 22,
+      "visible": true
+    },
+    {
+      "name": "Men",
+      "slug": "men",
+      "parent": "dresses",
+      "description": "Future clothing collection for men.",
+      "image": "",
+      "order": 30,
+      "visible": false
+    },
+    {
+      "name": "Educational Toys",
+      "slug": "educational-toys",
+      "parent": "toys",
+      "description": "Hands-on toys for building and learning.",
+      "image": "",
+      "order": 40,
+      "visible": true
+    },
+    {
+      "name": "Soft Toys",
+      "slug": "soft-toys",
+      "parent": "toys",
+      "description": "Soft and cuddly companions.",
+      "image": "",
+      "order": 41,
+      "visible": true
+    }
+  ]
+}

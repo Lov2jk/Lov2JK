@@ -1,0 +1,9 @@
+{
+  "name": "Frocks",
+  "slug": "kids-frocks",
+  "parent": "kids",
+  "description": "Playful frocks for everyday joy.",
+  "image": "",
+  "order": 21,
+  "visible": true
+}

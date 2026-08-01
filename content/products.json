@@ -8,7 +8,7 @@
       "offerPrice": 250,
       "sku": "L2J-D-001",
       "stock": 100,
-      "category": "Dresses",
+      "category": "kids-party-wear",
       "colors": [
         "Rose",
         "Yellow",
@@ -36,7 +36,7 @@
       "offerPrice": 849,
       "sku": "L2J-D-002",
       "stock": 12,
-      "category": "Dresses",
+      "category": "kids-frocks",
       "colors": [
         "Yellow",
         "Pink"
@@ -61,7 +61,7 @@
       "offerPrice": 699,
       "sku": "L2J-T-001",
       "stock": 15,
-      "category": "Toys",
+      "category": "educational-toys",
       "colors": [
         "Multicolor"
       ],
@@ -80,7 +80,7 @@
       "offerPrice": 899,
       "sku": "L2J-T-002",
       "stock": 0,
-      "category": "Toys",
+      "category": "educational-toys",
       "colors": [
         "Pastel"
       ],
@@ -99,7 +99,7 @@
       "offerPrice": 1599,
       "sku": "L2J-D-003",
       "stock": 5,
-      "category": "Dresses",
+      "category": "kids-party-wear",
       "colors": [
         "Lilac",
         "Blue"
@@ -121,7 +121,7 @@
       "offerPrice": 599,
       "sku": "L2J-T-003",
       "stock": 18,
-      "category": "Toys",
+      "category": "soft-toys",
       "colors": [
         "Ivory",
         "Pink"
