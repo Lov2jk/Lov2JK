@@ -3,7 +3,6 @@
   "slug": "educational-toys",
   "parent": "toys",
   "description": "Hands-on toys for building and learning.",
-  "image": "",
   "order": 40,
-  "visible": true
+  "visible": false
 }
