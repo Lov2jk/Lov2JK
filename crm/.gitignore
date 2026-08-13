@@ -1,0 +1,7 @@
+node_modules/
+.wrangler/
+dist/
+.dev.vars*
+admin.sql
+*.csv
+!../imports/products-template.csv

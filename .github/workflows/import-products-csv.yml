@@ -1,0 +1,19 @@
+name: Import JK Chennai product CSV
+on: {workflow_dispatch: {}}
+permissions: {contents: write}
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - run: node scripts/import_products_csv.mjs imports/products.csv
+      - run: node scripts/sync_admin_lists.mjs
+      - name: Save validated import
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/products.json content/stock.json content/variant-stock.json content/prices.json content/visibility.json content/reviews.json content/checklist.json
+          git commit -m "Import product catalog from owner CSV"
+          git push

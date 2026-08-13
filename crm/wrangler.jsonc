@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "jk-chennai-contacts",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-13",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "d1_databases": [{"binding":"DB","database_name":"jk-chennai-contacts","database_id":"04a22a92-e254-4c7a-813a-0306837ad24f","migrations_dir":"migrations"}],
+  "observability": {"enabled":true,"head_sampling_rate":1},
+  "limits": {"cpu_ms":10000}
+}
