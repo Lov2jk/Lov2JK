@@ -1,0 +1,13 @@
+{
+  "name": "JK Chennai Store",
+  "short_name": "JK Chennai",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fffaf3",
+  "theme_color": "#ff5424",
+  "description": "Dresses and toys from JK Chennai",
+  "icons": [
+    {"src":"assets/images/Logo 1.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

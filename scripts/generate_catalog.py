@@ -64,7 +64,7 @@ index_html = re.sub(r'(<meta property="og:image" content=")[^"]+("\s*/?>)', rf'\
 index_html = re.sub(r'(<meta name="twitter:image" content=")[^"]+("\s*/?>)', rf'\g<1>{homepage_image}\2', index_html)
 index_path.write_text(index_html, encoding="utf-8")
 
-static_pages = ["", "shop.html", "about.html", "contact.html", "faq.html", "policies.html", "tracking.html"]
+static_pages = ["", "shop.html", "about.html", "contact.html", "faq.html", "policies.html", "tracking.html", "catalog.html", "saved.html"]
 urls = [base + page for page in static_pages]
 urls += [base + "products/" + quote(str(p["slug"])) + ".html" for p in products]
 sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

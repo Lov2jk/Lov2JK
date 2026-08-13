@@ -91,7 +91,26 @@ Buyers can choose 1–5 stars and send a review to the business WhatsApp number.
 
 Use **Quick stock update** for stock and **Quick price update** for regular and offer prices. Set stock to `0` to mark a product sold out automatically. Use **Show or hide products** when preparing a product or temporarily removing it from the shop. New products are connected to these simple lists automatically after the Product catalog is saved. The **Product checklist** reports missing essential information.
 
+For products with colour/size combinations, first add a unique SKU and quantity for each combination under **Product catalog → Colour and size stock variants**. After the automatic Admin sync finishes, everyday changes can be made under **Quick colour-size stock** without opening the full product.
+
+The owner-only helper page at `/stock-tools.html` downloads all SKU, price and stock information as a CSV for Excel or Google Sheets. Its import button creates a replacement `stock.json`; upload that file to `content/stock.json` on GitHub. This is the safest free bulk workflow possible on static GitHub Pages.
+
 Use **Homepage & promotions** for hero images, homepage copy, category images and the advertisement popup. Use **Order status messages** for the editable order journey shown on the tracking page.
+
+## New sales tools
+
+- `/tracking.html`: customers enter their order reference. Update it from **Customer order tracking** in Pages CMS. Store only the reference, public status, customer-facing note and courier link—never addresses or payment information.
+- `/catalog.html`: a clean current catalogue. Choose **Save / print PDF** to create a shareable PDF from any browser.
+- `/expo.html`: fast product search, large controls and cart access for exhibitions and counter sales.
+- `/saved.html`: device-only wishlist and recently viewed products; no customer account is required.
+- The mobile bottom bar keeps Home, Shop, Saved, Cart and WhatsApp one tap away.
+- The site is installable as a lightweight web app. On Android Chrome, use **Add to Home screen**.
+
+The cart now collects name, mobile, PIN code, address and payment preference before preparing the WhatsApp order. It creates a `JKC-...` reference and remembers the buyer's details only on that device. Stock remains manual: WhatsApp orders cannot safely reduce a public JSON file without an outside order/inventory service.
+
+## Google setup
+
+The site already publishes a sitemap, robots file, Merchant Center XML feed, product structured data and local-business information. In Pages CMS, paste the Search Console verification content under **Homepage & promotions → Google Search Console verification code**, publish, and then submit `https://jkchennai.in/sitemap.xml` in Search Console. Google Business Profile and Merchant Center approval still happen in Google's dashboards; they cannot be created by website code alone.
 
 ## WhatsApp and payments
 

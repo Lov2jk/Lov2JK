@@ -114,6 +114,19 @@ content:
             label: Sizes
             type: string
             list: true
+          - name: variants
+            label: Colour and size stock variants
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{sku} — {color} / {size} — {stock}"
+            description: Optional but recommended. Add one row for every sellable colour and size combination.
+            fields:
+              - {name: sku, label: Variant SKU, type: string, required: true}
+              - {name: color, label: Colour, type: string}
+              - {name: size, label: Size, type: string}
+              - {name: stock, label: Stock quantity, type: number, required: true, default: 0}
           - name: ageGroup
             label: Age group
             type: string
@@ -150,6 +163,11 @@ content:
             description: Optional preview image shown before a direct video starts.
           - {name: material, label: Material or product details, type: text}
           - {name: care, label: Care or safety instructions, type: text}
+          - {name: measurements, label: Measurements and fit notes, type: text}
+          - {name: included, label: What is included, type: text}
+          - {name: deliveryInfo, label: Product delivery information, type: text}
+          - {name: returnInfo, label: Product return information, type: text}
+          - {name: safetyInfo, label: Toy safety or garment warnings, type: text}
           - name: sizeGuide
             label: Size guide
             type: object
@@ -216,6 +234,30 @@ content:
           - {name: price, label: Regular price, type: number, required: true}
           - {name: offerPrice, label: Offer price, type: number}
 
+  - name: quick_variant_stock
+    label: Quick colour-size stock
+    type: file
+    path: content/variant-stock.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: variants
+        label: Variant stock quantities
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{sku} — {color} / {size}"
+        description: Change only the stock quantity for each colour and size SKU.
+        fields:
+          - {name: product, label: Product, type: string, readonly: true}
+          - {name: productSlug, label: Product reference, type: string, hidden: true}
+          - {name: sku, label: Variant SKU, type: string, readonly: true}
+          - {name: color, label: Colour, type: string, readonly: true}
+          - {name: size, label: Size, type: string, readonly: true}
+          - {name: stock, label: Stock quantity, type: number, required: true}
+
   - name: product_visibility
     label: Show or hide products
     type: file
@@ -274,6 +316,37 @@ content:
                 description: Enter a whole number from 1 to 5.
               - {name: text, label: Review, type: text, required: true}
               - {name: verified, label: Verified purchase, type: boolean}
+              - {name: date, label: Review date, type: date}
+              - {name: photo, label: Customer photo, type: image}
+              - {name: approved, label: Approved for website, type: boolean, default: true}
+
+  - name: order_tracking
+    label: Customer order tracking
+    type: file
+    path: content/orders.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: orders
+        label: Published order statuses
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{reference} — {status}"
+        description: Add or update an order so the customer can check it on the Order status page. Do not include private address or payment information.
+        fields:
+          - {name: reference, label: Order reference, type: string, required: true}
+          - name: status
+            label: Current status
+            type: select
+            required: true
+            options:
+              values: [Received, Payment confirmed, Packed, Shipped, Delivered, Cancelled]
+          - {name: message, label: Customer message, type: text}
+          - {name: trackingUrl, label: Courier tracking link, type: string}
+          - {name: updated, label: Last updated, type: datetime}
 
   - name: product_checklist
     label: Product checklist
@@ -310,6 +383,10 @@ content:
       - {name: heroEyebrow, label: Homepage small heading, type: string}
       - {name: heroTitle, label: Homepage main heading, type: string}
       - {name: heroDescription, label: Homepage introduction, type: text}
+      - name: googleSiteVerification
+        label: Google Search Console verification code
+        type: string
+        description: Paste only the content value supplied by Google, not the complete meta tag.
       - {name: heroVisualEnabled, label: Show homepage hero visual, type: boolean}
       - name: heroImages
         label: Homepage hero slideshow images
