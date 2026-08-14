@@ -30,10 +30,22 @@
   "deliveryEstimate": "Typical delivery in 3–7 business days after dispatch",
   "lowStockThreshold": 3,
   "orderStatuses": [
-    {"name": "Confirmed", "message": "Your JK Chennai order is confirmed and payment has been received."},
-    {"name": "Packed", "message": "Your JK Chennai order has been packed with care and is ready for dispatch."},
-    {"name": "Shipped", "message": "Your JK Chennai order has been shipped. We will share the tracking link with you."},
-    {"name": "Delivered", "message": "Your JK Chennai order has been delivered. Thank you for shopping with us!"}
+    {
+      "name": "Confirmed",
+      "message": "Your JK Chennai order is confirmed and payment has been received."
+    },
+    {
+      "name": "Packed",
+      "message": "Your JK Chennai order has been packed with care and is ready for dispatch."
+    },
+    {
+      "name": "Shipped",
+      "message": "Your JK Chennai order has been shipped. We will share the tracking link with you."
+    },
+    {
+      "name": "Delivered",
+      "message": "Your JK Chennai order has been delivered. Thank you for shopping with us!"
+    }
   ],
   "analyticsMeasurementId": "G-55YE4H4E58",
   "business": {
@@ -52,13 +64,13 @@
     }
   ],
   "promotion": {
-    "enabled": false,
+    "enabled": true,
     "eyebrow": "Expo",
     "title": "A little extra joy",
     "text": "Discover our newest dresses and toys. Message us for current launch offers and combo prices.",
     "buttonLabel": "Shop new arrivals",
     "buttonUrl": "shop.html",
-    "videoUrl": "https://youtu.be/9hjekEYw4bc?si=H4SxF_YeOCzPMZgF",
+    "videoUrl": "https://online.fliphtml5.com/jkchennai/cdbs/",
     "videoAutoplay": true,
     "videoMuted": true,
     "videoControls": true
