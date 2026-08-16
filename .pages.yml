@@ -54,6 +54,33 @@ content:
     format: json
     operations:
       delete: false
+    actions:
+      - name: duplicate-product
+        label: Duplicate product
+        workflow: duplicate-product.yml
+        ref: current
+        cancelable: false
+        confirm:
+          title: Duplicate a product?
+          message: The new copy will be hidden, unfeatured and set to zero stock until you finish editing it.
+          button: Create safe copy
+        fields:
+          - name: sourceSku
+            label: Existing product SKU to copy
+            type: text
+            required: true
+          - name: newName
+            label: New product name
+            type: text
+            required: true
+          - name: newSku
+            label: New unique SKU
+            type: text
+            required: true
+          - name: newSlug
+            label: New URL slug
+            type: text
+            required: true
     fields:
       - name: products
         label: Products

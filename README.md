@@ -44,6 +44,20 @@ GitHub creates the `CNAME` file when the domain is saved in Settings. Do not add
 
 Open your Pages CMS dashboard. Select **Categories & subcategories** to manage the shop structure, or **Product catalog → Products** to manage products.
 
+### Duplicate a similar product
+
+1. Open **Product catalog** and choose **Duplicate product**.
+2. Enter the SKU of the product to copy, followed by the new product name, unique SKU and lowercase URL slug.
+3. Choose **Create safe copy** and wait for the workflow to finish.
+4. Reopen the catalog and edit the new copy. Its descriptions, category, options, size guide and images are copied, while its stock is `0`, homepage feature is off and website visibility is off.
+5. Replace any product-specific images and review the generated variant SKUs, update the price, then use **Quick stock update** and **Show or hide products** to publish it.
+
+The duplicate workflow never overwrites an existing SKU or URL slug. Generated colour-size variant SKUs end in `-V01`, `-V02` and so on, with zero stock until reviewed.
+
+### Admin access without sharing GitHub
+
+Keep the owner GitHub account as the master and recovery login. In Pages CMS, invite each approved staff member as a collaborator using their own email address. Collaborators can edit this repository's content and media without receiving the GitHub password, but they cannot manage the CMS configuration or other collaborators. Remove access when a staff member no longer needs it. Do not put a password in the static `/admin/` HTML or JavaScript.
+
 ### Add a category or subcategory
 
 1. Open **Categories & subcategories** and choose **Add entry**.

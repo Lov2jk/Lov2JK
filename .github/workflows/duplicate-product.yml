@@ -1,0 +1,39 @@
+name: Duplicate JK Chennai product
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS action payload
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: duplicate-jk-chennai-product
+  cancel-in-progress: false
+
+jobs:
+  duplicate:
+    runs-on: ubuntu-latest
+    env:
+      PAGES_CMS_PAYLOAD: ${{ inputs.payload }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Create safe product copy
+        run: node scripts/duplicate_product.mjs
+      - name: Connect duplicate to Admin lists
+        run: node scripts/sync_admin_lists.mjs
+      - name: Save duplicated product
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/products.json content/stock.json content/variant-stock.json content/prices.json content/visibility.json content/reviews.json content/checklist.json
+          git commit -m "Duplicate product from Pages CMS"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
