@@ -35,6 +35,12 @@
       "slug": "cuddle-bunny",
       "sku": "L2J-T-003",
       "visible": true
+    },
+    {
+      "name": "DDD2",
+      "slug": "122",
+      "sku": "L2J-D-011",
+      "visible": false
     }
   ]
 }

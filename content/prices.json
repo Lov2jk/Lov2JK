@@ -41,6 +41,13 @@
       "sku": "L2J-T-003",
       "price": 699,
       "offerPrice": 599
+    },
+    {
+      "name": "DDD2",
+      "slug": "122",
+      "sku": "L2J-D-011",
+      "price": 350,
+      "offerPrice": 250
     }
   ]
 }
