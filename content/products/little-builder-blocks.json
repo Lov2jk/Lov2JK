@@ -1,0 +1,27 @@
+{
+  "name": "Little Builder Blocks",
+  "catalogOrder": 4,
+  "slug": "little-builder-blocks",
+  "description": "A bright starter block set for building, sorting and creating together.",
+  "price": 1099,
+  "offerPrice": 899,
+  "sku": "L2J-T-002",
+  "stock": 0,
+  "category": "educational-toys",
+  "colors": [
+    "Pastel"
+  ],
+  "ageGroup": "4+ years",
+  "images": [
+    "assets/images/products/1bYZe0.jpg"
+  ],
+  "featured": false,
+  "available": false,
+  "sizes": [],
+  "variants": [],
+  "visible": true,
+  "display": {
+    "slideshowEnabled": true,
+    "slideSeconds": 4
+  }
+}

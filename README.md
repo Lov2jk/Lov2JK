@@ -6,7 +6,7 @@ A mobile-first static catalog for **JK Chennai**. It is designed for GitHub Page
 
 - **Hosting:** GitHub Pages with the included automatic publishing workflow.
 - **Storefront:** plain HTML, CSS and JavaScript. No build step is needed.
-- **Catalog:** `content/products.json`.
+- **Catalog source:** one easy file per product in `content/products/`; the public `content/products.json` is generated automatically.
 - **Owner editor:** Decap CMS at `/admin/`.
 - **Orders:** client-side bag followed by a pre-filled WhatsApp order.
 - **Payments:** confirm stock first, then send your UPI/GPay/WhatsApp Pay details or a trusted payment link.
@@ -42,15 +42,26 @@ GitHub creates the `CNAME` file when the domain is saved in Settings. Do not add
 
 ## Product admin without coding
 
-Open your Pages CMS dashboard. Select **Categories & subcategories** to manage the shop structure, or **Product catalog → Products** to manage products.
+Open your Pages CMS dashboard and select **Products — Add or edit**. Every product now has its own searchable page, so you no longer need to open one large catalog file.
+
+### Add one product quickly
+
+1. Select **Products — Add or edit → Add entry**.
+2. Complete the basic fields: name, SKU, URL name, category, description, price, stock, colours, sizes and age group.
+3. Upload the product pictures. The first picture becomes the catalog cover.
+4. Leave **Publish product on website** off while checking the entry.
+5. Save. The website catalog, price, stock, visibility, checklist and product page are rebuilt automatically.
+6. Reopen the product and turn on **Publish product on website** when it is ready.
+
+Image/slideshow settings, variants and advanced details are separate optional sections. You do not need to complete them for every new product.
 
 ### Duplicate a similar product
 
-1. Open **Product catalog** and choose **Duplicate product**.
+1. Open **Products — Add or edit** and choose **Duplicate a similar product**.
 2. Enter the SKU of the product to copy, followed by the new product name, unique SKU and lowercase URL slug.
 3. Choose **Create safe copy** and wait for the workflow to finish.
-4. Reopen the catalog and edit the new copy. Its descriptions, category, options, size guide and images are copied, while its stock is `0`, homepage feature is off and website visibility is off.
-5. Replace any product-specific images and review the generated variant SKUs, update the price, then use **Quick stock update** and **Show or hide products** to publish it.
+4. Open the new product copy. Its descriptions, category, options, size guide and images are copied, while its stock is `0`, homepage feature is off and website visibility is off.
+5. Replace its pictures, check the generated variant SKUs and price, then turn on **Publish product on website** when ready.
 
 The duplicate workflow never overwrites an existing SKU or URL slug. Generated colour-size variant SKUs end in `-V01`, `-V02` and so on, with zero stock until reviewed.
 
@@ -95,6 +106,8 @@ If you want the absolute easiest owner workflow, use **Pages CMS** at `app.pages
 
 In the Admin panel, open a product, select **Product images**, and upload JPG, PNG or WebP files. The original upload is preserved. Every GitHub Pages deployment automatically creates smaller WebP storefront copies, so large owner uploads do not slow down customer browsing. Portrait images with a consistent aspect ratio, ideally 4:5, still give the neatest catalog.
 
+For bulk products, name image files with the SKU before uploading, for example `JKC-D-101-1.jpg`, `JKC-D-101-2.jpg` and `JKC-D-101-3.jpg`. If the spreadsheet does not contain image filenames, the catalog builder automatically attaches matching SKU-prefixed images.
+
 Each visible product also receives a permanent `products/product-name.html` page with social preview information. Share that page from the browser so WhatsApp, Facebook and other services can show the product name, description, price and main photo.
 
 Every product page and catalog card has a **Share product** button. On supported phones it opens the normal share menu; otherwise it copies the permanent product link.
@@ -103,11 +116,23 @@ Buyers can choose 1–5 stars and send a review to the business WhatsApp number.
 
 ## Update stock and prices
 
-Use **Quick stock update** for stock and **Quick price update** for regular and offer prices. Set stock to `0` to mark a product sold out automatically. Use **Show or hide products** when preparing a product or temporarily removing it from the shop. New products are connected to these simple lists automatically after the Product catalog is saved. The **Product checklist** reports missing essential information.
+Use **Quick stock update** for stock and **Quick price update** for regular and offer prices. Set stock to `0` to mark a product sold out automatically. Open the product and use **Publish product on website** when preparing it or temporarily removing it from the shop. New products are connected to the quick lists automatically after saving. The **Product checklist** reports missing essential information.
 
-For products with colour/size combinations, first add a unique SKU and quantity for each combination under **Product catalog → Colour and size stock variants**. After the automatic Admin sync finishes, everyday changes can be made under **Quick colour-size stock** without opening the full product.
+For products with colour/size combinations, first add a unique SKU and quantity for each combination under the product's **Colour and size stock — optional** section. After the automatic Admin sync finishes, everyday changes can be made under **Quick colour-size stock** without opening the full product.
 
 The owner-only helper page at `/stock-tools.html` downloads all SKU, price and stock information as a CSV for Excel or Google Sheets. Its import button creates a replacement `stock.json`; upload that file to `content/stock.json` on GitHub. This is the safest free bulk workflow possible on static GitHub Pages.
+
+### Add many products with the simple spreadsheet
+
+1. In Pages CMS, open **Bulk products spreadsheet**.
+2. Add one product per row. Separate multiple colours, sizes and image filenames with `|`.
+3. Keep **Publish** set to `No` for new products, then save the spreadsheet.
+4. Choose **Import spreadsheet now → Start safe import**.
+5. Wait about one minute, then open **Products — Add or edit** to check the new drafts and upload any missing photos.
+
+You can also download the CSV template from `/admin/` and use Excel. Save it as `products.csv` in the repository's `imports` folder before running the same import action.
+
+The importer matches existing products by SKU. Blank optional spreadsheet cells do not erase existing information. New products are imported as hidden drafts, duplicate SKUs and URL names are rejected, and the workflow reports each new or updated product.
 
 Use **Homepage & promotions** for hero images, homepage copy, category images and the advertisement popup. Use **Order status messages** for the editable order journey shown on the tracking page.
 
@@ -153,7 +178,8 @@ admin/                    visual content editor
 assets/css/               store design
 assets/js/                catalog, filters, bag and WhatsApp flow
 assets/images/products/   uploaded product photos
-content/products.json     all products
+content/products/         editable individual product files
+content/products.json     automatically generated public catalog
 content/settings.json     contact, payment and social settings
 .github/workflows/        automatic GitHub Pages publishing
 *.html                    storefront pages

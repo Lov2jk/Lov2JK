@@ -47,44 +47,171 @@ content:
         default: true
         description: Turn this off to prepare a future category without showing it to customers.
 
-  - name: catalog
-    label: Product catalog
-    type: file
-    path: content/products.json
+  - name: products
+    label: Products — Add or edit
+    type: collection
+    path: content/products
     format: json
-    operations:
-      delete: false
+    filename: "{fields.slug}.json"
+    view:
+      primary: name
+      fields: [sku, category, stock, visible]
+      sort: [name, sku, category]
+      search: [name, sku, slug, category]
+      default:
+        sort: name
+        order: asc
     actions:
       - name: duplicate-product
-        label: Duplicate product
+        label: Duplicate a similar product
+        scope: collection
         workflow: duplicate-product.yml
         ref: current
         cancelable: false
         confirm:
           title: Duplicate a product?
-          message: The new copy will be hidden, unfeatured and set to zero stock until you finish editing it.
+          message: The copy will be hidden and have zero stock until you finish it.
           button: Create safe copy
         fields:
-          - name: sourceSku
-            label: Existing product SKU to copy
-            type: text
-            required: true
-          - name: newName
-            label: New product name
-            type: text
-            required: true
-          - name: newSku
-            label: New unique SKU
-            type: text
-            required: true
-          - name: newSlug
-            label: New URL slug
-            type: text
-            required: true
+          - {name: sourceSku, label: Existing product SKU to copy, type: text, required: true}
+          - {name: newName, label: New product name, type: text, required: true}
+          - {name: newSku, label: New unique SKU, type: text, required: true}
+          - {name: newSlug, label: New URL name, type: text, required: true}
+    fields:
+      - {name: name, label: Product name, type: string, required: true}
+      - {name: catalogOrder, label: Catalog order, type: number, hidden: true, default: 9999}
+      - name: sku
+        label: Main SKU
+        type: string
+        required: true
+        description: Use one unique code, for example JKC-D-101. Name image files with this SKU for automatic matching.
+        pattern:
+          regex: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+          message: Use letters, numbers, dots, underscores or hyphens only.
+      - name: slug
+        label: Product URL name
+        type: string
+        required: true
+        description: Lowercase product name with hyphens, for example pink-party-dress. Do not change it after publishing.
+        pattern:
+          regex: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          message: Use lowercase letters, numbers and hyphens only.
+      - name: category
+        label: Category
+        type: reference
+        required: true
+        description: Choose the most specific category.
+        options:
+          collection: categories
+          search: "name,slug,parent"
+          value: "{fields.slug}"
+          label: "{fields.name}"
+      - {name: description, label: Short product description, type: text, required: true}
+      - {name: price, label: Regular price, type: number, required: true}
+      - {name: offerPrice, label: Offer price, type: number}
+      - {name: stock, label: Starting stock quantity, type: number, required: true, default: 0}
+      - {name: colors, label: Colours, type: string, list: true}
+      - {name: sizes, label: Sizes, type: string, list: true}
+      - {name: ageGroup, label: Age group, type: string}
+      - name: images
+        label: Product images
+        type: image
+        list: true
+        description: Upload portrait photos. The first image is the cover. Alternatively upload files named with the SKU, such as JKC-D-101-1.jpg.
+      - {name: featured, label: Show in homepage favourites, type: boolean, default: false}
+      - name: visible
+        label: Publish product on website
+        type: boolean
+        default: false
+        description: Keep off until pictures, price and stock are ready. Turn on to publish.
+      - name: display
+        label: Image and slideshow settings
+        type: object
+        fields:
+          - name: imageFit
+            label: Image display
+            type: select
+            default: cover
+            options:
+              values: [cover, contain]
+          - name: imagePosition
+            label: Crop position
+            type: select
+            default: center
+            options:
+              values: [center, top, bottom, left, right]
+          - {name: slideshowEnabled, label: Move multiple images automatically, type: boolean, default: true}
+          - {name: slideSeconds, label: Seconds between images, type: number, default: 4}
+      - name: variants
+        label: Colour and size stock — optional
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{sku} — {color} / {size}"
+        description: Add this only when each colour or size needs its own SKU and quantity.
+        fields:
+          - {name: sku, label: Variant SKU, type: string}
+          - {name: color, label: Colour, type: string}
+          - {name: size, label: Size, type: string}
+          - {name: stock, label: Stock quantity, type: number, default: 0}
+      - name: advanced
+        label: Advanced details — optional
+        type: object
+        fields:
+          - {name: material, label: Material or product details, type: text}
+          - {name: care, label: Care instructions, type: text}
+          - {name: measurements, label: Measurements and fit, type: text}
+          - {name: included, label: What is included, type: text}
+          - {name: deliveryInfo, label: Special delivery information, type: text}
+          - {name: returnInfo, label: Special return information, type: text}
+          - {name: safetyInfo, label: Safety information, type: text}
+          - {name: videoUrl, label: Product video URL, type: string}
+          - {name: videoPoster, label: Video cover image, type: image}
+          - name: sizeGuide
+            label: Size guide
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{size}"
+            fields:
+              - {name: size, label: Size, type: string, required: true}
+              - {name: chest, label: Chest, type: string}
+              - {name: waist, label: Waist, type: string}
+              - {name: length, label: Length, type: string}
+
+  - name: bulk_products
+    label: Bulk products spreadsheet
+    type: file
+    path: imports/products.csv
+    format: datagrid
+    operations:
+      delete: false
+    actions:
+      - name: import-products
+        label: Import spreadsheet now
+        scope: file
+        workflow: import-products-csv.yml
+        ref: current
+        cancelable: false
+        confirm:
+          title: Import the saved spreadsheet?
+          message: Existing products are matched by SKU. New products are created as drafts unless Publish is Yes.
+          button: Start safe import
+
+  - name: catalog
+    label: System-generated product catalog — do not edit
+    type: file
+    path: content/products.json
+    format: json
+    operations:
+      delete: false
     fields:
       - name: products
         label: Products
         type: object
+        readonly: true
         list:
           collapsible:
             collapsed: true
@@ -286,7 +413,7 @@ content:
           - {name: stock, label: Stock quantity, type: number, required: true}
 
   - name: product_visibility
-    label: Show or hide products
+    label: System visibility list — do not edit
     type: file
     path: content/visibility.json
     format: json
@@ -296,6 +423,7 @@ content:
       - name: products
         label: Website visibility
         type: object
+        readonly: true
         list:
           collapsible:
             collapsed: true

@@ -1,0 +1,26 @@
+{
+  "name": "Cuddle Bunny Plush",
+  "catalogOrder": 6,
+  "slug": "cuddle-bunny",
+  "description": "A super-soft huggable friend made for stories, naps and everyday adventures.",
+  "price": 699,
+  "offerPrice": 599,
+  "sku": "L2J-T-003",
+  "stock": 18,
+  "category": "soft-toys",
+  "colors": [
+    "Ivory",
+    "Pink"
+  ],
+  "ageGroup": "All ages",
+  "featured": true,
+  "available": true,
+  "sizes": [],
+  "images": [],
+  "variants": [],
+  "visible": true,
+  "display": {
+    "slideshowEnabled": true,
+    "slideSeconds": 4
+  }
+}

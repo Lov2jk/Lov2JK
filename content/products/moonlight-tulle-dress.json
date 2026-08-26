@@ -1,0 +1,30 @@
+{
+  "name": "Moonlight Tulle Dress",
+  "catalogOrder": 5,
+  "slug": "moonlight-tulle-dress",
+  "description": "A dreamy occasion dress with gentle sparkle and a soft, non-scratchy lining.",
+  "price": 1899,
+  "offerPrice": 1599,
+  "sku": "L2J-D-003",
+  "stock": 5,
+  "category": "kids-party-wear",
+  "colors": [
+    "Lilac",
+    "Blue"
+  ],
+  "sizes": [
+    "4-5Y",
+    "6-7Y",
+    "8-9Y"
+  ],
+  "ageGroup": "4-9 years",
+  "featured": false,
+  "available": true,
+  "images": [],
+  "variants": [],
+  "visible": true,
+  "display": {
+    "slideshowEnabled": true,
+    "slideSeconds": 4
+  }
+}

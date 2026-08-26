@@ -1,5 +1,11 @@
 name: Import JK Chennai product CSV
-on: {workflow_dispatch: {}}
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Optional Pages CMS action payload
+        required: false
+        type: string
 permissions: {contents: write}
 jobs:
   import:
@@ -9,11 +15,16 @@ jobs:
       - uses: actions/setup-node@v4
         with: {node-version: 22}
       - run: node scripts/import_products_csv.mjs imports/products.csv
+      - run: node scripts/build_product_catalog.mjs
       - run: node scripts/sync_admin_lists.mjs
       - name: Save validated import
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add content/products.json content/stock.json content/variant-stock.json content/prices.json content/visibility.json content/reviews.json content/checklist.json
+          git add content/products content/products.json content/stock.json content/variant-stock.json content/prices.json content/visibility.json content/reviews.json content/checklist.json
+          if git diff --cached --quiet; then
+            echo "No product changes to save."
+            exit 0
+          fi
           git commit -m "Import product catalog from owner CSV"
           git push

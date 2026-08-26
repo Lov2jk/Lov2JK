@@ -1,4 +1,4 @@
-name: Deploy Lov2JK to GitHub Pages
+name: Deploy JK Chennai to GitHub Pages
 on:
   push:
     branches: [main]
@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Build customer catalog from easy Admin product entries
+        run: node scripts/build_product_catalog.mjs
       - name: Prepare simple Admin lists
         run: node scripts/sync_admin_lists.mjs
       - name: Install image optimizer

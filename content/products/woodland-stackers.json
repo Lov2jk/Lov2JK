@@ -1,0 +1,27 @@
+{
+  "name": "Woodland Stacking Friends",
+  "catalogOrder": 3,
+  "slug": "woodland-stackers",
+  "description": "Chunky, colourful stacking pieces for imaginative, screen-free play.",
+  "price": 799,
+  "offerPrice": 699,
+  "sku": "L2J-T-001",
+  "stock": 15,
+  "category": "educational-toys",
+  "colors": [
+    "Multicolor"
+  ],
+  "ageGroup": "3+ years",
+  "images": [
+    "assets/images/products/2.png"
+  ],
+  "featured": true,
+  "available": true,
+  "sizes": [],
+  "variants": [],
+  "visible": true,
+  "display": {
+    "slideshowEnabled": true,
+    "slideSeconds": 4
+  }
+}

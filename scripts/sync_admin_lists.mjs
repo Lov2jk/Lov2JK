@@ -20,7 +20,7 @@ const previousVariants=new Map((read('variant-stock.json',{variants:[]}).variant
 const identity=p=>({name:p.name||'Unnamed product',slug:p.slug||'',sku:p.sku||''});
 write('stock.json',{products:catalog.map(p=>({...identity(p),stock:Math.max(0,Number(previousStock.get(p.slug)?.stock??p.stock)||0)}))});
 write('prices.json',{products:catalog.map(p=>({...identity(p),price:Math.max(0,Number(previousPrices.get(p.slug)?.price??p.price)||0),offerPrice:previousPrices.has(p.slug)?previousPrices.get(p.slug).offerPrice:(p.offerPrice??null)}))});
-write('visibility.json',{products:catalog.map(p=>({...identity(p),visible:previousVisibility.has(p.slug)?previousVisibility.get(p.slug).visible!==false:p.visible!==false}))});
+write('visibility.json',{products:catalog.map(p=>({...identity(p),visible:p.visible!==false}))});
 write('reviews.json',{products:catalog.map(p=>({...identity(p),reviews:previousReviews.has(p.slug)?previousReviews.get(p.slug).reviews||[]:p.reviews||[]}))});
 write('variant-stock.json',{variants:catalog.flatMap(p=>(p.variants||[]).map(v=>({product:p.name,productSlug:p.slug,sku:v.sku,color:v.color||'',size:v.size||'',stock:Math.max(0,Number(previousVariants.get(v.sku)?.stock??v.stock)||0)})))});
 

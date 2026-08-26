@@ -1,2 +1,2 @@
-Product Name,Slug,Description,Regular Price,Offer Price,Main SKU,Main Stock,Category Slug,Colours,Sizes,Age Group,Variant SKUs,Variant Stocks,Image URLs or Paths,Material,Care,Measurements,Included,Delivery Info,Return Info,Safety Info,Featured,Visible
-Example Cotton Dress,example-cotton-dress,Comfortable cotton dress,999,849,JKC-D-100,20,kids-party-wear,Rose|Blue,2-3Y|4-5Y,2-5 years,JKC-D-100-R-23|JKC-D-100-R-45|JKC-D-100-B-23|JKC-D-100-B-45,5|5|5|5,assets/images/products/example-1.jpg|https://example.com/example-2.jpg,Cotton,Hand wash,Chest and length in size guide,Dress,Dispatch in 1-2 days,See return policy,Keep away from fire,true,true
+Product Name,SKU,Category,Regular Price,Offer Price,Stock,Colours,Sizes,Age Group,Image Filenames,Description,Publish,Featured
+Example Cotton Dress,JKC-D-101,kids-party-wear,999,849,20,Rose|Blue,2-3Y|4-5Y,2-5 years,JKC-D-101-1.jpg|JKC-D-101-2.jpg,Comfortable cotton celebration dress,No,No
