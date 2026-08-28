@@ -3,7 +3,6 @@
   "slug": "soft-toys",
   "parent": "toys",
   "description": "Soft and cuddly companions.",
-  "image": "",
   "order": 41,
-  "visible": true
+  "visible": false
 }
