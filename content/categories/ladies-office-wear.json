@@ -3,7 +3,6 @@
   "slug": "ladies-office-wear",
   "parent": "ladies",
   "description": "Smart and comfortable office wear.",
-  "image": "",
   "order": 12,
-  "visible": true
+  "visible": false
 }
