@@ -3,7 +3,6 @@
   "slug": "ladies-t-shirts",
   "parent": "ladies",
   "description": "Everyday T-shirts for women.",
-  "image": "",
   "order": 11,
-  "visible": true
+  "visible": false
 }
