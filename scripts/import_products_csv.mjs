@@ -3,17 +3,35 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const input=process.argv[2]||path.join(root,'imports','products.csv');
-const productDir=path.join(root,'content','products');
+const input=process.argv[2]||path.join(root,'imports','products-bulk.json');
+const productDir=process.env.JKC_PRODUCT_DIR||path.join(root,'content','products');
 const split=value=>String(value||'').split('|').map(x=>x.trim()).filter(Boolean);
 const truth=value=>/^(true|yes|1|publish|published)$/i.test(String(value||''));
 const slugify=value=>String(value||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const parse=text=>{const out=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&quoted&&n==='"'){cell+='"';i++}else if(c==='"')quoted=!quoted;else if(c===','&&!quoted){row.push(cell);cell=''}else if(/[\r\n]/.test(c)&&!quoted){if(c==='\r'&&n==='\n')i++;row.push(cell);if(row.some(x=>x.trim()))out.push(row);row=[];cell=''}else cell+=c}row.push(cell);if(row.some(x=>x.trim()))out.push(row);return out};
 
-if(!fs.existsSync(input))throw new Error('Upload imports/products.csv before running this workflow.');
+if(!fs.existsSync(input))throw new Error(`Bulk product file not found: ${input}`);
 fs.mkdirSync(productDir,{recursive:true});
-const table=parse(fs.readFileSync(input,'utf8').replace(/^\uFEFF/,''));
-const headers=table.shift().map(x=>x.trim());
+const sourceText=fs.readFileSync(input,'utf8').replace(/^\uFEFF/,'');
+let table,headers;
+if(path.extname(input).toLowerCase()==='.json'){
+  const data=JSON.parse(sourceText);
+  const records=Array.isArray(data)?data:data.products;
+  if(!Array.isArray(records))throw new Error('The bulk product file must contain a products list.');
+  headers=['Product Name','SKU','Slug','Category','Regular Price','Offer Price','Stock','Colours','Sizes','Age Group','Image Filenames','Description','Publish','Featured'];
+  table=records.map(record=>[
+    record.name,record.sku,record.slug,record.category,record.price,record.offerPrice,record.stock,
+    Array.isArray(record.colors)?record.colors.join('|'):record.colors,
+    Array.isArray(record.sizes)?record.sizes.join('|'):record.sizes,
+    record.ageGroup,
+    Array.isArray(record.imageFilenames)?record.imageFilenames.join('|'):record.imageFilenames,
+    record.description,record.publish===true?'Yes':'No',record.featured===true?'Yes':'No'
+  ].map(value=>value==null?'':String(value)));
+}else{
+  table=parse(sourceText);
+  headers=(table.shift()||[]).map(x=>x.trim());
+}
+if(!headers.length)throw new Error('The bulk product file has no column names.');
 const get=(row,...names)=>{for(const name of names){const index=headers.indexOf(name);if(index>=0&&row[index]?.trim())return row[index].trim()}return''};
 const existing=fs.readdirSync(productDir).filter(file=>file.endsWith('.json')).map(file=>JSON.parse(fs.readFileSync(path.join(productDir,file),'utf8')));
 const bySku=new Map(existing.map(product=>[String(product.sku||'').toUpperCase(),product]));
@@ -53,4 +71,4 @@ for(const [index,row] of table.entries()){
 }
 
 console.log(preview.join('\n'));
-console.log(`Validated and imported ${table.length} spreadsheet rows.`);
+console.log(`Validated and imported ${table.length} bulk product rows.`);

@@ -182,21 +182,70 @@ content:
               - {name: length, label: Length, type: string}
 
   - name: bulk_products
-    label: Bulk products spreadsheet
+    label: Bulk products — add rows
     type: file
-    path: imports/products.csv
-    format: datagrid
+    path: imports/products-bulk.json
+    format: json
     operations:
       delete: false
+    fields:
+      - name: products
+        label: Products to add or update
+        type: object
+        list:
+          collapsible:
+            collapsed: false
+            summary: "{name} — {sku}"
+        description: Add one row for each product. Existing products are matched by SKU; new products remain hidden unless Publish is turned on.
+        fields:
+          - {name: name, label: Product name, type: string, required: true}
+          - name: sku
+            label: SKU
+            type: string
+            required: true
+            description: Use one unique code, for example JKC-D-101.
+            pattern:
+              regex: "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+              message: Use letters, numbers, dots, underscores or hyphens only.
+          - name: slug
+            label: URL name — optional
+            type: string
+            description: Leave empty to create it from the product name automatically.
+            pattern:
+              regex: "^$|^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              message: Use lowercase letters, numbers and hyphens only.
+          - name: category
+            label: Category
+            type: reference
+            required: true
+            options:
+              collection: categories
+              search: "name,slug,parent"
+              value: "{fields.slug}"
+              label: "{fields.name}"
+          - {name: price, label: Regular price, type: number, required: true}
+          - {name: offerPrice, label: Offer price — optional, type: number}
+          - {name: stock, label: Stock quantity, type: number, required: true, default: 0}
+          - {name: colors, label: Colours, type: string, list: true}
+          - {name: sizes, label: Sizes, type: string, list: true}
+          - {name: ageGroup, label: Age group, type: string}
+          - name: imageFilenames
+            label: Image filenames — optional
+            type: string
+            list: true
+            description: Example JKC-D-101-1.jpg. Upload matching files in Media before importing, or add pictures from the product page afterwards.
+          - {name: description, label: Product description, type: text, required: true}
+          - {name: publish, label: Publish product on website, type: boolean, default: false}
+          - {name: featured, label: Show in homepage favourites, type: boolean, default: false}
     actions:
       - name: import-products
-        label: Import spreadsheet now
+        label: Import saved product rows now
         scope: file
         workflow: import-products-csv.yml
         ref: current
         cancelable: false
         confirm:
-          title: Import the saved spreadsheet?
+          title: Import the saved product rows?
           message: Existing products are matched by SKU. New products are created as drafts unless Publish is Yes.
           button: Start safe import
 

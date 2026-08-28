@@ -122,17 +122,17 @@ For products with colour/size combinations, first add a unique SKU and quantity 
 
 The owner-only helper page at `/stock-tools.html` downloads all SKU, price and stock information as a CSV for Excel or Google Sheets. Its import button creates a replacement `stock.json`; upload that file to `content/stock.json` on GitHub. This is the safest free bulk workflow possible on static GitHub Pages.
 
-### Add many products with the simple spreadsheet
+### Add many products with simple rows
 
-1. In Pages CMS, open **Bulk products spreadsheet**.
-2. Add one product per row. Separate multiple colours, sizes and image filenames with `|`.
-3. Keep **Publish** set to `No` for new products, then save the spreadsheet.
-4. Choose **Import spreadsheet now → Start safe import**.
+1. In Pages CMS, open **Bulk products — add rows**.
+2. Select **Add item** and complete one row for each product. Colours, sizes and image filenames have their own **Add item** controls.
+3. Keep **Publish product on website** off for new products, then save the rows.
+4. Choose **Import saved product rows now → Start safe import**.
 5. Wait about one minute, then open **Products — Add or edit** to check the new drafts and upload any missing photos.
 
-You can also download the CSV template from `/admin/` and use Excel. Save it as `products.csv` in the repository's `imports` folder before running the same import action.
+You can also download the optional CSV template from `/admin/` for planning products in Excel. The browser downloads it instead of showing raw CSV text.
 
-The importer matches existing products by SKU. Blank optional spreadsheet cells do not erase existing information. New products are imported as hidden drafts, duplicate SKUs and URL names are rejected, and the workflow reports each new or updated product.
+The importer matches existing products by SKU. Blank optional row fields do not erase existing information. New products are imported as hidden drafts, duplicate SKUs and URL names are rejected, and the workflow reports each new or updated product.
 
 Use **Homepage & promotions** for hero images, homepage copy, category images and the advertisement popup. Use **Order status messages** for the editable order journey shown on the tracking page.
 
