@@ -6,6 +6,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const input=process.argv[2]||path.join(root,'imports','products-bulk.json');
 const productDir=process.env.JKC_PRODUCT_DIR||path.join(root,'content','products');
 const imageDir=process.env.JKC_IMAGE_DIR||path.join(root,'assets','images','products');
+const categoryDir=process.env.JKC_CATEGORY_DIR||path.join(root,'content','categories');
 const split=value=>String(value||'').split('|').map(x=>x.trim()).filter(Boolean);
 const truth=value=>/^(true|yes|1|publish|published)$/i.test(String(value||''));
 const slugify=value=>String(value||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -35,6 +36,8 @@ if(path.extname(input).toLowerCase()==='.json'){
 if(!headers.length)throw new Error('The bulk product file has no column names.');
 const get=(row,...names)=>{for(const name of names){const index=headers.indexOf(name);if(index>=0&&row[index]?.trim())return row[index].trim()}return''};
 const existing=fs.readdirSync(productDir).filter(file=>file.endsWith('.json')).map(file=>JSON.parse(fs.readFileSync(path.join(productDir,file),'utf8')));
+const categories=fs.existsSync(categoryDir)?fs.readdirSync(categoryDir).filter(file=>file.endsWith('.json')).map(file=>JSON.parse(fs.readFileSync(path.join(categoryDir,file),'utf8'))):[];
+const categoryLookup=new Map(categories.flatMap(category=>[[String(category.slug||'').toLowerCase(),category.slug],[String(category.name||'').toLowerCase(),category.slug]]));
 const uploadedImages=fs.existsSync(imageDir)?fs.readdirSync(imageDir):[];
 const imagePath=image=>{
   if(/^https?:|^assets\//i.test(image))return image;
@@ -43,28 +46,45 @@ const imagePath=image=>{
   const actual=uploadedImages.find(file=>file.toLowerCase()===wanted)
     ||uploadedImages.find(file=>file.toLowerCase().startsWith(`${wanted}.`))
     ||uploadedImages.find(file=>path.parse(file).name.toLowerCase()===wantedStem);
-  return `assets/images/products/${actual||image}`;
+  if(!actual){console.warn(`Image not found and skipped: ${image}`);return'';}
+  return `assets/images/products/${actual}`;
 };
 const bySku=new Map(existing.map(product=>[String(product.sku||'').toUpperCase(),product]));
 const usedSlugs=new Map(existing.map(product=>[product.slug,String(product.sku||'').toUpperCase()]));
+const generatedSlugCounts=new Map();
+for(const row of table){
+  if(get(row,'Slug','URL Slug'))continue;
+  const base=slugify(get(row,'Product Name','Name'));
+  generatedSlugCounts.set(base,(generatedSlugCounts.get(base)||0)+1);
+}
 const seen=new Set(),preview=[];
 
 for(const [index,row] of table.entries()){
-  const line=index+2,name=get(row,'Product Name','Name'),sku=get(row,'Main SKU','SKU').toUpperCase(),category=get(row,'Category Slug','Category');
-  const slug=(get(row,'Slug','URL Slug')||slugify(name)).toLowerCase();
+  const line=index+2,name=get(row,'Product Name','Name'),sku=get(row,'Main SKU','SKU').toUpperCase(),categoryInput=get(row,'Category Slug','Category');
+  const category=categoryLookup.get(categoryInput.toLowerCase());
+  const explicitSlug=get(row,'Slug','URL Slug');
+  const baseSlug=slugify(name);
+  const slug=(explicitSlug||(generatedSlugCounts.get(baseSlug)>1?`${baseSlug}-${slugify(sku)}`:baseSlug)).toLowerCase();
   if(!name||!sku||!category)throw new Error(`Row ${line}: Product Name, SKU and Category are required.`);
+  if(!categoryLookup.has(categoryInput.toLowerCase()))throw new Error(`Row ${line}: Category "${categoryInput}" does not match an Admin category.`);
   if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug))throw new Error(`Row ${line}: invalid URL slug ${slug}.`);
   if(!/^[A-Z0-9][A-Z0-9._-]*$/.test(sku))throw new Error(`Row ${line}: invalid SKU ${sku}.`);
   if(seen.has(sku))throw new Error(`Row ${line}: duplicate SKU ${sku} in the spreadsheet.`);
   if(usedSlugs.has(slug)&&usedSlugs.get(slug)!==sku)throw new Error(`Row ${line}: URL slug ${slug} belongs to another product.`);
   seen.add(sku);
+  usedSlugs.set(slug,sku);
   const previous=bySku.get(sku)||{},next={...previous,name,sku,slug,category};
   const textFields=[['description','Description'],['ageGroup','Age Group'],['material','Material'],['care','Care'],['measurements','Measurements'],['included','Included'],['deliveryInfo','Delivery Info'],['returnInfo','Return Info'],['safetyInfo','Safety Info']];
   for(const [key,label] of textFields){const value=get(row,label);if(value)next[key]=value}
   const price=get(row,'Regular Price','Price'),offer=get(row,'Offer Price'),stock=get(row,'Main Stock','Stock');
   if(price)next.price=Number(price);if(offer)next.offerPrice=Number(offer);if(stock)next.stock=Math.max(0,Number(stock)||0);
   const colors=split(get(row,'Colours','Colors')),sizes=split(get(row,'Sizes')),images=split(get(row,'Image URLs or Paths','Images','Image Filenames'));
-  if(colors.length)next.colors=colors;if(sizes.length)next.sizes=sizes;if(images.length)next.images=images.map(imagePath);
+  if(colors.length)next.colors=colors;if(sizes.length)next.sizes=sizes;
+  if(images.length){
+    const requested=images.map(imagePath).filter(Boolean);
+    const matching=uploadedImages.filter(file=>file.toLowerCase().startsWith(`${sku.toLowerCase()}-`)).sort().map(file=>`assets/images/products/${file}`);
+    next.images=[...new Set([...requested,...matching])];
+  }
   const featured=get(row,'Featured'),visible=get(row,'Visible','Publish');
   if(featured)next.featured=truth(featured);if(visible)next.visible=truth(visible);else if(!bySku.has(sku))next.visible=false;
   if(!(Number(next.price)>0))throw new Error(`Row ${line}: Regular Price is required for a new product.`);
