@@ -3,7 +3,6 @@
   "slug": "kids-party-wear",
   "parent": "kids",
   "description": "Celebration-ready dresses for children.",
-  "image": "",
   "order": 22,
-  "visible": true
+  "visible": false
 }
