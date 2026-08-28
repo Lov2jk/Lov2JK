@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const input=process.argv[2]||path.join(root,'imports','products-bulk.json');
 const productDir=process.env.JKC_PRODUCT_DIR||path.join(root,'content','products');
+const imageDir=process.env.JKC_IMAGE_DIR||path.join(root,'assets','images','products');
 const split=value=>String(value||'').split('|').map(x=>x.trim()).filter(Boolean);
 const truth=value=>/^(true|yes|1|publish|published)$/i.test(String(value||''));
 const slugify=value=>String(value||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -34,6 +35,16 @@ if(path.extname(input).toLowerCase()==='.json'){
 if(!headers.length)throw new Error('The bulk product file has no column names.');
 const get=(row,...names)=>{for(const name of names){const index=headers.indexOf(name);if(index>=0&&row[index]?.trim())return row[index].trim()}return''};
 const existing=fs.readdirSync(productDir).filter(file=>file.endsWith('.json')).map(file=>JSON.parse(fs.readFileSync(path.join(productDir,file),'utf8')));
+const uploadedImages=fs.existsSync(imageDir)?fs.readdirSync(imageDir):[];
+const imagePath=image=>{
+  if(/^https?:|^assets\//i.test(image))return image;
+  const wanted=image.toLowerCase();
+  const wantedStem=path.parse(image).name.toLowerCase();
+  const actual=uploadedImages.find(file=>file.toLowerCase()===wanted)
+    ||uploadedImages.find(file=>file.toLowerCase().startsWith(`${wanted}.`))
+    ||uploadedImages.find(file=>path.parse(file).name.toLowerCase()===wantedStem);
+  return `assets/images/products/${actual||image}`;
+};
 const bySku=new Map(existing.map(product=>[String(product.sku||'').toUpperCase(),product]));
 const usedSlugs=new Map(existing.map(product=>[product.slug,String(product.sku||'').toUpperCase()]));
 const seen=new Set(),preview=[];
@@ -53,7 +64,7 @@ for(const [index,row] of table.entries()){
   const price=get(row,'Regular Price','Price'),offer=get(row,'Offer Price'),stock=get(row,'Main Stock','Stock');
   if(price)next.price=Number(price);if(offer)next.offerPrice=Number(offer);if(stock)next.stock=Math.max(0,Number(stock)||0);
   const colors=split(get(row,'Colours','Colors')),sizes=split(get(row,'Sizes')),images=split(get(row,'Image URLs or Paths','Images','Image Filenames'));
-  if(colors.length)next.colors=colors;if(sizes.length)next.sizes=sizes;if(images.length)next.images=images.map(image=>/^https?:|^assets\//i.test(image)?image:`assets/images/products/${image}`);
+  if(colors.length)next.colors=colors;if(sizes.length)next.sizes=sizes;if(images.length)next.images=images.map(imagePath);
   const featured=get(row,'Featured'),visible=get(row,'Visible','Publish');
   if(featured)next.featured=truth(featured);if(visible)next.visible=truth(visible);else if(!bySku.has(sku))next.visible=false;
   if(!(Number(next.price)>0))throw new Error(`Row ${line}: Regular Price is required for a new product.`);

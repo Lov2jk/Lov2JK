@@ -1,5 +1,9 @@
 name: Import JK Chennai bulk products
 on:
+  push:
+    branches: [main]
+    paths:
+      - imports/products.csv
   workflow_dispatch:
     inputs:
       payload:
@@ -7,6 +11,9 @@ on:
         required: false
         type: string
 permissions: {contents: write}
+concurrency:
+  group: import-jk-chennai-products
+  cancel-in-progress: false
 jobs:
   import:
     runs-on: ubuntu-latest
@@ -14,7 +21,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: {node-version: 22}
-      - run: node scripts/import_products_csv.mjs imports/products-bulk.json
+      - name: Import the selected bulk source
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
+            node scripts/import_products_csv.mjs imports/products.csv
+          else
+            node scripts/import_products_csv.mjs imports/products-bulk.json
+          fi
       - run: node scripts/build_product_catalog.mjs
       - run: node scripts/sync_admin_lists.mjs
       - name: Save validated import
@@ -26,5 +39,5 @@ jobs:
             echo "No product changes to save."
             exit 0
           fi
-          git commit -m "Import product catalog from owner bulk rows"
+          git commit -m "Import product catalog from owner bulk upload"
           git push

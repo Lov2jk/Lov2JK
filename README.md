@@ -134,6 +134,8 @@ The owner-only helper page at `/stock-tools.html` downloads all SKU, price and s
 
 You can also download the optional CSV template from `/admin/` for planning products in Excel. The browser downloads it instead of showing raw CSV text.
 
+To import an updated CSV, keep its exact filename as `products.csv`, open `/admin/`, choose **Upload updated products.csv**, drag the file onto GitHub and commit it to `main`. The CSV import starts automatically after that one commit. Upload product images first; the importer also recognizes a browser-added extension such as `.jpg.jpeg` when the CSV contains the intended `.jpg` filename.
+
 The importer matches existing products by SKU. Blank optional row fields do not erase existing information. New products are imported as hidden drafts, duplicate SKUs and URL names are rejected, and the workflow reports each new or updated product.
 
 Use **Homepage & promotions** for hero images, homepage copy, category images and the advertisement popup. Use **Order status messages** for the editable order journey shown on the tracking page.
