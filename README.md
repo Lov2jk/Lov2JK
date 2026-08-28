@@ -106,6 +106,8 @@ If you want the absolute easiest owner workflow, use **Pages CMS** at `app.pages
 
 In the Admin panel, open a product, select **Product images**, and upload JPG, PNG or WebP files. The original upload is preserved. Every GitHub Pages deployment automatically creates smaller WebP storefront copies, so large owner uploads do not slow down customer browsing. Portrait images with a consistent aspect ratio, ideally 4:5, still give the neatest catalog.
 
+To upload many pictures in one operation, open `/admin/` and choose **Upload many product images**. Drag all required JPG, PNG, WebP or GIF files onto the GitHub upload page, wait for every filename to appear, and choose **Commit changes** once. This avoids the file-version conflict that Pages CMS can show when it tries to commit several media files simultaneously.
+
 For bulk products, name image files with the SKU before uploading, for example `JKC-D-101-1.jpg`, `JKC-D-101-2.jpg` and `JKC-D-101-3.jpg`. If the spreadsheet does not contain image filenames, the catalog builder automatically attaches matching SKU-prefixed images.
 
 Each visible product also receives a permanent `products/product-name.html` page with social preview information. Share that page from the browser so WhatsApp, Facebook and other services can show the product name, description, price and main photo.
