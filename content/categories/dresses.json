@@ -1,9 +1,7 @@
 {
   "name": "Dresses",
   "slug": "dresses",
-  "parent": "",
   "description": "Dresses for every age and occasion.",
-  "image": "",
   "order": 1,
-  "visible": true
+  "visible": false
 }
