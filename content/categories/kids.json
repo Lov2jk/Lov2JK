@@ -3,7 +3,6 @@
   "slug": "kids",
   "parent": "dresses",
   "description": "Colourful, comfortable clothing for children.",
-  "image": "",
   "order": 20,
-  "visible": true
+  "visible": false
 }
