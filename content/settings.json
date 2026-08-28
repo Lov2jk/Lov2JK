@@ -11,9 +11,13 @@
   "heroSlideshowEnabled": true,
   "heroSlideSeconds": 4,
   "heroImages": [
-    "assets/images/products/1 (1)-1.png",
-    "assets/images/products/1-1.png",
-    "assets/images/products/3-1.png"
+    "assets/images/products/JKC-D-101-2.jpeg",
+    "assets/images/products/JKC-D-103-1.jpeg",
+    "assets/images/products/JKC-D-104-1.jpeg",
+    "assets/images/products/JKC-D-103-2.jpeg",
+    "assets/images/products/JKC-D-110-1.jpeg",
+    "assets/images/products/JKC-D-108-1-1.jpeg",
+    "assets/images/products/JKC-D-109-1.jpeg"
   ],
   "heroCardEnabled": true,
   "heroCardEyebrow": "THIS WEEK'S FAVOURITE",
@@ -77,8 +81,7 @@
   },
   "upiId": "m.shree.be@oksbi",
   "heroImage": "assets/images/products/1 (1)-1.png",
-  "dressesCategoryImage": "assets/images/products/Copilot_20260419_224155-1.png",
-  "toysCategoryImage": "assets/images/products/Copilot_20260419_224155-1.png",
+  "dressesCategoryImage": "assets/images/products/JKC-D-110-1.jpeg",
   "instagram": "https://www.instagram.com/jkchennai.store",
   "facebook": "https://www.facebook.com/jkchennai.store/"
 }
