@@ -1,0 +1,25 @@
+{
+  "name": "GIRLS WEAR",
+  "sku": "JKC-D-101",
+  "slug": "girls-wear-jkc-d-101",
+  "category": "kids-top-bottom-sets",
+  "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+  "ageGroup": "2-6 years",
+  "price": 499,
+  "offerPrice": 349,
+  "stock": 20,
+  "colors": [
+    "Brown",
+    "Orange"
+  ],
+  "sizes": [
+    "2-6Y"
+  ],
+  "images": [
+    "assets/images/products/JKC-D-101-1.jpeg",
+    "assets/images/products/JKC-D-101-2.jpeg"
+  ],
+  "featured": true,
+  "visible": true,
+  "available": true
+}

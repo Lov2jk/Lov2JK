@@ -48,6 +48,83 @@
       "sku": "L2J-D-011",
       "status": "Ready to sell",
       "issues": "All essential product information is complete."
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-101",
+      "sku": "JKC-D-101",
+      "status": "Ready to sell",
+      "issues": "All essential product information is complete."
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-102",
+      "sku": "JKC-D-102",
+      "status": "Needs attention",
+      "issues": "Missing: Product image"
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-103",
+      "sku": "JKC-D-103",
+      "status": "Ready to sell",
+      "issues": "All essential product information is complete."
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-104",
+      "sku": "JKC-D-104",
+      "status": "Ready to sell",
+      "issues": "All essential product information is complete."
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-105",
+      "sku": "JKC-D-105",
+      "status": "Needs attention",
+      "issues": "Missing: Colours"
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-106",
+      "sku": "JKC-D-106",
+      "status": "Needs attention",
+      "issues": "Missing: Colours"
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-107",
+      "sku": "JKC-D-107",
+      "status": "Needs attention",
+      "issues": "Missing: Colours"
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-108",
+      "sku": "JKC-D-108",
+      "status": "Needs attention",
+      "issues": "Missing: Colours"
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-109",
+      "sku": "JKC-D-109",
+      "status": "Needs attention",
+      "issues": "Missing: Colours"
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-110",
+      "sku": "JKC-D-110",
+      "status": "Needs attention",
+      "issues": "Missing: Colours"
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-111",
+      "sku": "JKC-D-111",
+      "status": "Needs attention",
+      "issues": "Missing: Colours"
     }
   ]
 }

@@ -48,6 +48,83 @@
       "sku": "L2J-D-011",
       "price": 350,
       "offerPrice": 250
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-101",
+      "sku": "JKC-D-101",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-102",
+      "sku": "JKC-D-102",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-103",
+      "sku": "JKC-D-103",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-104",
+      "sku": "JKC-D-104",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-105",
+      "sku": "JKC-D-105",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-106",
+      "sku": "JKC-D-106",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-107",
+      "sku": "JKC-D-107",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-108",
+      "sku": "JKC-D-108",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-109",
+      "sku": "JKC-D-109",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-110",
+      "sku": "JKC-D-110",
+      "price": 499,
+      "offerPrice": 349
+    },
+    {
+      "name": "GIRLS WEAR",
+      "slug": "girls-wear-jkc-d-111",
+      "sku": "JKC-D-111",
+      "price": 499,
+      "offerPrice": 349
     }
   ]
 }

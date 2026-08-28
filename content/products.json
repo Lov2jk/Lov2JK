@@ -198,6 +198,286 @@
       "slideshowEnabled": true,
       "slideSeconds": 4,
       "material": "Cotton "
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-101",
+      "slug": "girls-wear-jkc-d-101",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "colors": [
+        "Brown",
+        "Orange"
+      ],
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-101-1.jpeg",
+        "assets/images/products/JKC-D-101-2.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-102",
+      "slug": "girls-wear-jkc-d-102",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "colors": [
+        "Orange",
+        "Green"
+      ],
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-103",
+      "slug": "girls-wear-jkc-d-103",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "colors": [
+        "Sky blue",
+        "Dark blue"
+      ],
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-103-1.jpeg",
+        "assets/images/products/JKC-D-103-2.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-104",
+      "slug": "girls-wear-jkc-d-104",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "colors": [
+        "Yello",
+        "Black"
+      ],
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-104-1.jpeg",
+        "assets/images/products/JKC-D-104-2.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-105",
+      "slug": "girls-wear-jkc-d-105",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-105-1.jpeg",
+        "assets/images/products/JKC-D-105-2.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "colors": [],
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-106",
+      "slug": "girls-wear-jkc-d-106",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-106-1.jpeg",
+        "assets/images/products/JKC-D-106-2-1.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "colors": [],
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-107",
+      "slug": "girls-wear-jkc-d-107",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-107-1.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "colors": [],
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-108",
+      "slug": "girls-wear-jkc-d-108",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-108-1-1.jpeg",
+        "assets/images/products/JKC-D-108-1-2.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "colors": [],
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-109",
+      "slug": "girls-wear-jkc-d-109",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-109-1.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "colors": [],
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-110",
+      "slug": "girls-wear-jkc-d-110",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-110-1.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "colors": [],
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
+    },
+    {
+      "name": "GIRLS WEAR",
+      "sku": "JKC-D-111",
+      "slug": "girls-wear-jkc-d-111",
+      "category": "kids-top-bottom-sets",
+      "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+      "ageGroup": "2-6 years",
+      "price": 499,
+      "offerPrice": 349,
+      "stock": 20,
+      "sizes": [
+        "2-6Y"
+      ],
+      "images": [
+        "assets/images/products/JKC-D-111-1.jpeg"
+      ],
+      "featured": true,
+      "visible": true,
+      "available": true,
+      "colors": [],
+      "variants": [],
+      "slideshowEnabled": true,
+      "slideSeconds": 4
     }
   ]
 }
