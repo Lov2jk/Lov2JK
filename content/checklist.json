@@ -1,55 +1,6 @@
 {
   "products": [
     {
-      "name": "Rose Twirl Party Dress",
-      "slug": "rose-twirl-dress",
-      "sku": "L2J-D-001",
-      "status": "Ready to sell",
-      "issues": "All essential product information is complete."
-    },
-    {
-      "name": "Sunshine Cotton Frock",
-      "slug": "sunshine-cotton-frock",
-      "sku": "L2J-D-002",
-      "status": "Ready to sell",
-      "issues": "All essential product information is complete."
-    },
-    {
-      "name": "Woodland Stacking Friends",
-      "slug": "woodland-stackers",
-      "sku": "L2J-T-001",
-      "status": "Ready to sell",
-      "issues": "All essential product information is complete."
-    },
-    {
-      "name": "Little Builder Blocks",
-      "slug": "little-builder-blocks",
-      "sku": "L2J-T-002",
-      "status": "Ready to sell",
-      "issues": "All essential product information is complete."
-    },
-    {
-      "name": "Moonlight Tulle Dress",
-      "slug": "moonlight-tulle-dress",
-      "sku": "L2J-D-003",
-      "status": "Needs attention",
-      "issues": "Missing: Product image"
-    },
-    {
-      "name": "Cuddle Bunny Plush",
-      "slug": "cuddle-bunny",
-      "sku": "L2J-T-003",
-      "status": "Needs attention",
-      "issues": "Missing: Product image"
-    },
-    {
-      "name": "DDD2",
-      "slug": "122",
-      "sku": "L2J-D-011",
-      "status": "Ready to sell",
-      "issues": "All essential product information is complete."
-    },
-    {
       "name": "GIRLS WEAR",
       "slug": "girls-wear-jkc-d-101",
       "sku": "JKC-D-101",
