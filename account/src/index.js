@@ -5,6 +5,7 @@ import {
   normalizePincode,
   now,
   parseCookie,
+  passwordHash,
   passwordVerify,
   randomToken,
   safeUrl,
@@ -492,7 +493,7 @@ async function ownerApi(request, env, path) {
     const token = randomToken();
     const csrf = randomToken();
     const time = now();
-    await env.DB.prepare('INSERT INTO owner_sessions VALUES(?,?,?,?)').bind(await sha256(token), await sha256(csrf), new Date(Date.now() + OWNER_SESSION_SECONDS * 1000).toISOString(), time).run();
+    await env.DB.prepare('INSERT INTO owner_sessions(token_hash,csrf_hash,expires_at,created_at,owner_username) VALUES(?,?,?,?,?)').bind(await sha256(token), await sha256(csrf), new Date(Date.now() + OWNER_SESSION_SECONDS * 1000).toISOString(), time, user.username).run();
     await audit(env, request, 'owner', user.id, 'owner_login');
     return json(request, env, { ok: true, csrf, name: user.name }, 200, { 'set-cookie': sessionCookie(request, env, OWNER_COOKIE, token, OWNER_SESSION_SECONDS, 'Strict') });
   }
@@ -506,6 +507,19 @@ async function ownerApi(request, env, path) {
   if (path === '/owner/api/logout' && request.method === 'POST') {
     await env.DB.prepare('DELETE FROM owner_sessions WHERE token_hash=?').bind(auth.current.token_hash).run();
     return json(request, env, { ok: true }, 200, { 'set-cookie': sessionCookie(request, env, OWNER_COOKIE, '', 0) });
+  }
+  if (path === '/owner/api/password' && request.method === 'POST') {
+    const data = await boundedJson(request);
+    const password = String(data.password || '');
+    if (password.length < 12 || password.length > 200) throw new Error('Password must contain at least 12 characters.');
+    if (!auth.current.owner_username) return json(request, env, { error: 'Please sign out and sign in again before changing the password.' }, 409);
+    const hashed = await passwordHash(password);
+    const result = await env.CRM_DB.prepare("UPDATE users SET password_hash=?,password_salt=?,password_iterations=?,must_change_password=0,updated_at=? WHERE username=? AND role='admin' AND enabled=1")
+      .bind(hashed.hash, hashed.salt, hashed.iterations, now(), auth.current.owner_username).run();
+    if (!result.meta.changes) return json(request, env, { error: 'Owner account not found.' }, 404);
+    await audit(env, request, 'owner', auth.current.owner_username, 'owner_password_change', 'owner', auth.current.owner_username);
+    await env.DB.prepare('DELETE FROM owner_sessions WHERE token_hash<>?').bind(auth.current.token_hash).run();
+    return json(request, env, { ok: true });
   }
   if (path === '/owner/api/orders' && request.method === 'GET') {
     return json(request, env, { orders: await findOwnerOrders(request, env) });
@@ -579,6 +593,11 @@ let csrf='';const statuses=${JSON.stringify(ORDER_STATUSES)},payments=${JSON.str
   </script></body></html>`;
 }
 
+function ownerPasswordEnhancement(html) {
+  const addition = `<style>dialog{border:0;border-radius:18px;padding:0;box-shadow:0 24px 70px #0005}dialog::backdrop{background:#071a2699}.password-card{width:min(430px,88vw);margin:0}.password-card .toolbar{justify-content:flex-end}</style><script>(()=>{const logoutButton=document.getElementById('logout'),button=document.createElement('button');button.id='changePassword';button.className='secondary';button.textContent='Change password';button.hidden=logoutButton.hidden;logoutButton.before(button);new MutationObserver(()=>button.hidden=logoutButton.hidden).observe(logoutButton,{attributes:true,attributeFilter:['hidden']});document.body.insertAdjacentHTML('beforeend','<dialog id="passwordDialog"><form id="passwordForm" class="card password-card"><h2>Change owner password</h2><p>Use at least 12 characters. A longer passphrase is easier to remember and safer.</p><label>New password<input name="password" type="password" minlength="12" maxlength="200" required autocomplete="new-password"></label><label>Confirm password<input name="confirmPassword" type="password" minlength="12" maxlength="200" required autocomplete="new-password"></label><div class="toolbar"><button type="button" class="secondary" id="cancelPassword">Cancel</button><button>Save password</button></div><p id="passwordMessage" class="message"></p></form></dialog>');const dialog=document.getElementById('passwordDialog'),form=document.getElementById('passwordForm'),message=document.getElementById('passwordMessage');button.onclick=()=>dialog.showModal();document.getElementById('cancelPassword').onclick=()=>dialog.close();form.onsubmit=async event=>{event.preventDefault();const data=Object.fromEntries(new FormData(form));if(data.password!==data.confirmPassword){message.className='message error';message.textContent='The two passwords do not match.';return}try{await call('/owner/api/password',{method:'POST',body:JSON.stringify({password:data.password})});message.className='message ok';message.textContent='Password changed successfully.';form.reset();setTimeout(()=>dialog.close(),900)}catch(error){message.className='message error';message.textContent=error.message}}})()</script>`;
+  return html.replace('</body>', `${addition}</body>`);
+}
+
 async function serveReviewMedia(request, env, path) {
   const key = decodeURIComponent(path.slice('/review-media/'.length));
   if (!/^[a-f0-9-]{20,}$/i.test(key)) return new Response('Not found', { status: 404, headers: securityHeaders() });
@@ -609,7 +628,7 @@ export default {
       if (path.startsWith('/review-media/') && request.method === 'GET') return serveReviewMedia(request, env, path);
       if (path.startsWith('/api/')) return customerApi(request, env, path);
       if (path.startsWith('/owner/api/')) return ownerApi(request, env, path);
-      if (path === '/owner' || path === '/owner/orders') return new Response(ownerPage().replace('</head>', '<style>[hidden]{display:none!important}</style></head>'), { headers: { 'content-type': 'text/html;charset=utf-8', ...securityHeaders() } });
+      if (path === '/owner' || path === '/owner/orders') return new Response(ownerPasswordEnhancement(ownerPage()).replace('</head>', '<style>[hidden]{display:none!important}</style></head>'), { headers: { 'content-type': 'text/html;charset=utf-8', ...securityHeaders() } });
       return redirect(`${env.SITE_ORIGIN}/account.html`);
     } catch (error) {
       console.error(JSON.stringify({ message: 'request_failed', path, method: request.method, error: error instanceof Error ? error.message : String(error) }));

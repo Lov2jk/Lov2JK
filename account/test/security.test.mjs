@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cleanText, normalizeEmail, normalizeIndianMobile, normalizePincode, passwordVerify, randomToken, secureEqual } from '../src/security.js';
+import { cleanText, normalizeEmail, normalizeIndianMobile, normalizePincode, passwordHash, passwordVerify, randomToken, secureEqual } from '../src/security.js';
 
 test('normalizes Indian contact details', () => {
   assert.equal(normalizeEmail(' Buyer@Example.COM '), 'buyer@example.com');
@@ -34,4 +34,10 @@ test('verifies an existing CRM-compatible PBKDF2 password', async () => {
   const user = { password_hash, password_salt: salt, password_iterations: iterations };
   assert.equal(await passwordVerify('correct-password', user), true);
   assert.equal(await passwordVerify('wrong-password', user), false);
+});
+
+test('creates a CRM-compatible owner password hash', async () => {
+  const hashed = await passwordHash('A-new-secure-password-123');
+  assert.equal(await passwordVerify('A-new-secure-password-123', { password_hash: hashed.hash, password_salt: hashed.salt, password_iterations: hashed.iterations }), true);
+  assert.equal(await passwordVerify('wrong-password', { password_hash: hashed.hash, password_salt: hashed.salt, password_iterations: hashed.iterations }), false);
 });
