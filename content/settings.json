@@ -69,16 +69,16 @@
     }
   ],
   "promotion": {
-    "enabled": false,
-    "eyebrow": "Expo",
+    "enabled": true,
+    "eyebrow": "Scan & follow",
     "title": "A little extra joy",
     "text": "Discover our newest dresses and toys. Message us for current launch offers and combo prices.",
     "buttonLabel": "Shop new arrivals",
     "buttonUrl": "shop.html",
-    "videoUrl": "https://online.fliphtml5.com/jkchennai/cdbs/",
     "videoAutoplay": true,
     "videoMuted": true,
-    "videoControls": true
+    "videoControls": true,
+    "image": "assets/images/products/Qrl.png"
   },
   "upiId": "m.shree.be@oksbi",
   "heroImage": "assets/images/products/1 (1)-1.png",
