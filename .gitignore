@@ -6,3 +6,7 @@ Gpay QR.jpeg
 # Local workspace files
 .codex/
 .agents/
+account/.wrangler/
+account/node_modules/
+account/wrangler.log
+account/worker-configuration.d.ts

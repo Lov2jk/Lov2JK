@@ -1,6 +1,6 @@
 # JK Chennai store catalog
 
-A mobile-first static catalog for **JK Chennai**. It is designed for GitHub Pages: no database, server, monthly hosting bill or complex checkout backend.
+A mobile-first catalog for **JK Chennai**. The public storefront stays on GitHub Pages, while the optional customer account and order-history service uses the Cloudflare Free plan.
 
 ## Recommended setup
 
@@ -10,9 +10,10 @@ A mobile-first static catalog for **JK Chennai**. It is designed for GitHub Page
 - **Owner editor:** Decap CMS at `/admin/`.
 - **Orders:** client-side bag followed by a pre-filled WhatsApp order.
 - **Payments:** confirm stock first, then send your UPI/GPay/WhatsApp Pay details or a trusted payment link.
-- **Tracking:** reply manually on WhatsApp with the courier tracking link.
+- **Customer accounts:** Google login, saved products, addresses and order history through a separate Cloudflare Worker and D1 database.
+- **Tracking:** update a cloud order from the private owner order page, or continue replying manually on WhatsApp.
 
-This is deliberately a catalog-and-order site, not an Amazon-style system. Prices and stock are updated manually. Customer accounts, automatic payments, automatic inventory and live tracking require outside services.
+This is deliberately a catalog-and-order site, not an Amazon-style system. Prices and stock are updated manually. Cloud accounts do not automatically confirm payment, reduce stock or retrieve courier tracking.
 
 ## Before publishing
 
@@ -145,8 +146,9 @@ Use **Homepage & promotions** for hero images, homepage copy, category images an
 - `/tracking.html`: customers enter their order reference. Update it from **Customer order tracking** in Pages CMS. Store only the reference, public status, customer-facing note and courier link—never addresses or payment information.
 - `/catalog.html`: a clean current catalogue. Choose **Save / print PDF** to create a shareable PDF from any browser.
 - `/expo.html`: fast product search, large controls and cart access for exhibitions and counter sales.
-- `/saved.html`: device-only wishlist and recently viewed products; no customer account is required.
-- The mobile bottom bar keeps Home, Shop, Saved, Cart and WhatsApp one tap away.
+- `/saved.html`: device wishlist and recently viewed products. Signed-in customers also sync saved products to Cloudflare.
+- `/account.html`: optional Google customer login, cloud favourites, addresses and order history.
+- The mobile bottom bar keeps Home, Shop, Saved, Cart and Account one tap away.
 - The site is installable as a lightweight web app. On Android Chrome, use **Add to Home screen**.
 
 The cart now collects name, mobile, PIN code, address and payment preference before preparing the WhatsApp order. It creates a `JKC-...` reference and remembers the buyer's details only on that device. Stock remains manual: WhatsApp orders cannot safely reduce a public JSON file without an outside order/inventory service.
@@ -163,17 +165,30 @@ For safety, send payment instructions only after confirmation. Accept UPI/GPay/W
 
 ## What is and is not automatic
 
-| Included on GitHub Pages | Needs an outside service |
+| Included in the free setup | Still manual or needs another service |
 |---|---|
 | Product catalog and filters | Real-time inventory |
 | Product detail views | Card/UPI payment gateway |
 | Device-local shopping bag | Automatic invoices and taxes |
-| WhatsApp order messages | Customer accounts and passwords |
+| WhatsApp order messages | WhatsApp API automation charges |
+| Google customer login through Cloudflare | SMS login or non-Google password recovery |
+| Saved products, addresses and order history in D1 | Automatic payment confirmation without a gateway webhook |
 | Manual stock edits | Automatic order emails/SMS |
-| Manual tracking help | Live courier tracking |
+| Owner-managed order status | Live courier tracking API |
 | Decap product editor | Decap GitHub OAuth proxy |
 
-Customer login is intentionally omitted. A secure login needs identity storage, password recovery and protected customer data, none of which GitHub Pages provides. Add it later only through a trusted commerce or identity service if the business truly needs it.
+Guest checkout remains available. Customer accounts are optional and use Google OAuth so JK Chennai never stores customer passwords.
+
+## Cloudflare Free customer accounts
+
+The separate `account/` Worker protects customer data from the public GitHub repository and from the existing private contact CRM. It uses:
+
+- Workers for the secure API and owner order page
+- D1 for customers, sessions, addresses, saved items and orders
+- Turnstile before Google login
+- a daily Cron Trigger to remove expired sessions
+
+Required one-time deployment steps are documented in `account/README.md`. Google OAuth and Turnstile secrets must be stored with `wrangler secret put`; never add them to `content/settings.json` or GitHub.
 
 ## Folder map
 
@@ -182,6 +197,7 @@ admin/                    visual content editor
 assets/css/               store design
 assets/js/                catalog, filters, bag and WhatsApp flow
 assets/images/products/   uploaded product photos
+account/                  Cloudflare Worker, D1 migration and account documentation
 content/products/         editable individual product files
 content/products.json     automatically generated public catalog
 content/settings.json     contact, payment and social settings

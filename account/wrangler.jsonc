@@ -1,0 +1,34 @@
+{
+  "$schema": "../crm/node_modules/wrangler/config-schema.json",
+  "name": "jk-chennai-accounts",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-28",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "account.jkchennai.in", "custom_domain": true }
+  ],
+  "vars": {
+    "SITE_ORIGIN": "https://jkchennai.in",
+    "GOOGLE_REDIRECT_URI": "https://account.jkchennai.in/auth/google/callback"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "jk-chennai-accounts",
+      "database_id": "1102fe2b-0b01-4654-b007-cd78c39cc11c",
+      "migrations_dir": "migrations"
+    },
+    {
+      "binding": "CRM_DB",
+      "database_name": "jk-chennai-contacts",
+      "database_id": "04a22a92-e254-4c7a-813a-0306837ad24f"
+    }
+  ],
+  "triggers": { "crons": ["17 2 * * *"] },
+  "observability": {
+    "enabled": true,
+    "logs": { "head_sampling_rate": 1 },
+    "traces": { "enabled": true, "head_sampling_rate": 0.05 }
+  }
+}
