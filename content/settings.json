@@ -69,7 +69,7 @@
     }
   ],
   "promotion": {
-    "enabled": true,
+    "enabled": false,
     "eyebrow": "Scan & follow",
     "title": "A little extra joy",
     "text": "Discover our newest dresses and toys. Message us for current launch offers and combo prices.",
