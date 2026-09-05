@@ -3,6 +3,86 @@ media:
   output: assets/images/products
 
 content:
+  - name: catalogues
+    label: Catalogues — add, hide or update
+    type: collection
+    path: content/catalogues
+    format: json
+    filename: "{fields.slug}.json"
+    view:
+      primary: title
+      fields: [code, category, month, year, status, showOnWebsite, showOnHomepage]
+      sort: [displayOrder, year, title]
+      search: [title, code, category, month, year]
+      default:
+        sort: displayOrder
+        order: asc
+    fields:
+      - {name: title, label: Catalogue title, type: string, required: true}
+      - name: slug
+        label: Catalogue URL name
+        type: string
+        required: true
+        description: Lowercase words joined by hyphens, for example september-2026-kids. Do not change after sharing the link.
+        pattern:
+          regex: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          message: Use lowercase letters, numbers and hyphens only.
+      - {name: code, label: Catalogue code, type: string, required: true, description: A unique code such as JKC-KIDS-2026-09. Customers use this when ordering.}
+      - name: category
+        label: Catalogue category
+        type: select
+        required: true
+        options:
+          values: [Kids wear, Ladies wear, Mens wear, Dresses, Toys, New arrivals]
+      - {name: month, label: Month or collection name, type: string, required: true}
+      - {name: year, label: Year, type: number, required: true, default: 2026}
+      - {name: description, label: Short description, type: text, required: true}
+      - name: coverImage
+        label: Catalogue cover image
+        type: image
+        required: true
+        description: Use a clear portrait JPG. This appears on the homepage and catalogue list.
+      - name: pages
+        label: Catalogue JPG pages
+        type: image
+        list:
+          min: 1
+        required: true
+        description: Upload all catalogue JPG pages. Drag them into the correct order; the first page appears first.
+      - {name: startingPrice, label: Starting or special price, type: number, default: 0}
+      - {name: stylesCount, label: Number of styles, type: number, default: 0}
+      - {name: ageGroup, label: Age group, type: string}
+      - name: status
+        label: Availability status
+        type: select
+        required: true
+        default: available
+        options:
+          values:
+            - {name: available, label: Available}
+            - {name: temporarily-unavailable, label: Temporarily unavailable}
+            - {name: coming-soon, label: Coming soon}
+            - {name: archived, label: Archived}
+      - name: showOnWebsite
+        label: Show catalogue on website
+        type: boolean
+        default: false
+        description: Turn this off to hide the catalogue everywhere without deleting it.
+      - name: showOnHomepage
+        label: Show in homepage Latest Catalogues
+        type: boolean
+        default: false
+        description: The catalogue must also be shown on the website. Only the first four featured catalogues appear on the homepage.
+      - name: displayOrder
+        label: Display order
+        type: number
+        default: 10
+        description: Lower numbers appear first.
+      - name: whatsappMessage
+        label: WhatsApp order message
+        type: text
+        description: Include blanks for SKU, size and quantity. If left empty, the website creates a standard message.
+
   - name: categories
     label: Categories & subcategories
     type: collection

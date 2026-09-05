@@ -45,6 +45,18 @@ GitHub creates the `CNAME` file when the domain is saved in Settings. Do not add
 
 Open your Pages CMS dashboard and select **Products — Add or edit**. Every product now has its own searchable page, so you no longer need to open one large catalog file.
 
+## Monthly JPG catalogues
+
+Use **Catalogues — add, hide or update** in Pages CMS when a monthly delivery contains many styles. Each catalogue has its own cover, ordered JPG pages, catalogue code, category, price, age group and WhatsApp order message.
+
+1. Add a catalogue and use a stable URL name such as `september-2026-kids`.
+2. Upload a portrait cover and all JPG pages in browsing order.
+3. Keep **Show catalogue on website** off until the collection is ready.
+4. Turn it on to publish. Enable **Show in homepage Latest Catalogues** for up to four important current catalogues.
+5. When stock finishes, choose **Temporarily unavailable** or turn website visibility off. The catalogue remains safely stored in Admin and can be reactivated without uploading again.
+
+Customers browse active collections at `/catalogues.html`. A catalogue includes swipe navigation, full-screen viewing, current-image download, sharing and a WhatsApp order message containing its catalogue code. Hidden direct links show a friendly unavailable notice instead of exposing the catalogue.
+
 ### Add one product quickly
 
 1. Select **Products — Add or edit → Add entry**.

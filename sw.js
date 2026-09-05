@@ -1,5 +1,5 @@
-const CACHE='jkc-v5';
-const CORE=['/','/index.html','/shop.html','/cart.html','/saved.html','/account.html','/offline.html','/assets/css/styles.css','/assets/css/brand.css','/assets/js/app.js','/assets/js/account.js'];
+const CACHE='jkc-v6';
+const CORE=['/','/index.html','/shop.html','/catalogues.html','/catalogue.html','/cart.html','/saved.html','/account.html','/offline.html','/assets/css/styles.css','/assets/css/brand.css','/assets/css/catalogues.css','/assets/js/app.js','/assets/js/account.js','/assets/js/catalogues.js'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));

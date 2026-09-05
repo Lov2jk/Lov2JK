@@ -27,6 +27,8 @@ jobs:
           node-version: 22
       - name: Build customer catalog from easy Admin product entries
         run: node scripts/build_product_catalog.mjs
+      - name: Build monthly JPG catalogue index
+        run: node scripts/build_catalogue_index.mjs
       - name: Prepare simple Admin lists
         run: node scripts/sync_admin_lists.mjs
       - name: Install image optimizer
