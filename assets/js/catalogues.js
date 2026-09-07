@@ -36,8 +36,8 @@ window.renderCatalogueFeature=async function({settings,wa}={}){
     section.className='wrap section home-catalogues';
     section.id='latest-catalogues';
     section.innerHTML=`<div class="section-head"><div><p class="eyebrow">Browse more, upload less</p><h2>Latest catalogues</h2><p>Swipe through our newest collections and order any design by Product Code.</p></div><a href="catalogues.html">View all catalogues →</a></div><div class="catalogue-rail">${items.map(item=>catalogueCard(item,true)).join('')}</div>`;
-    const categories=document.querySelector('#home-categories');
-    if(categories)categories.insertAdjacentElement('afterend',section);
+    const trust=document.querySelector('.home-trust'),categories=document.querySelector('#home-categories');
+    if(trust)trust.insertAdjacentElement('afterend',section);else if(categories)categories.insertAdjacentElement('beforebegin',section);
   }catch{}
 };
 
