@@ -9,14 +9,35 @@ content:
     path: content/catalogues
     format: json
     filename: "{fields.slug}.json"
+    operations:
+      create: true
+      rename: true
+      delete: true
     view:
       primary: title
-      fields: [code, category, month, year, status, showOnWebsite, showOnHomepage]
-      sort: [displayOrder, year, title]
+      fields: [code, category, month, year, status, showOnWebsite, showOnHomepage, featuredOrder]
+      sort: [featuredOrder, displayOrder, year, title]
       search: [title, code, category, month, year]
       default:
         sort: displayOrder
         order: asc
+    actions:
+      - name: duplicate-catalogue
+        label: Duplicate for next collection
+        scope: entry
+        workflow: duplicate-catalogue.yml
+        ref: current
+        cancelable: false
+        confirm:
+          title: Duplicate this catalogue?
+          message: A hidden copy will be created. Replace its images and check all details before publishing.
+          button: Create copy
+        fields:
+          - {name: newTitle, label: New catalogue title, type: text, required: true}
+          - {name: newSlug, label: New URL name, type: text, required: true}
+          - {name: newCode, label: New catalogue code, type: text, required: true}
+          - {name: newMonth, label: New month or collection name, type: text, required: true}
+          - {name: newYear, label: New year, type: number, required: true, default: 2026}
     fields:
       - {name: title, label: Catalogue title, type: string, required: true}
       - name: slug
@@ -27,7 +48,7 @@ content:
         pattern:
           regex: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
           message: Use lowercase letters, numbers and hyphens only.
-      - {name: code, label: Catalogue code, type: string, required: true, description: A unique code such as JKC-KIDS-2026-09. Customers use this when ordering.}
+      - {name: code, label: Catalogue code, type: string, required: true, description: A unique internal collection code such as JKC-KIDS-2026-09.}
       - name: category
         label: Catalogue category
         type: select
@@ -43,15 +64,36 @@ content:
         required: true
         description: Use a clear portrait JPG. This appears on the homepage and catalogue list.
       - name: pages
-        label: Catalogue JPG pages
-        type: image
+        label: Catalogue products and images
+        type: object
         list:
           min: 1
+          collapsible:
+            collapsed: true
+            summary: "{productCode} — {productName}"
         required: true
-        description: Upload all catalogue JPG pages. Drag them into the correct order; the first page appears first.
+        description: Add every design in display order. Each image gets its own easy customer-facing Product Code.
+        fields:
+          - {name: image, label: Product image, type: image, required: true}
+          - {name: productCode, label: Product Code, type: string, required: true, description: Example JKC-D-101. This is shown to customers and included automatically in WhatsApp.}
+          - {name: productName, label: Product name, type: string, description: Optional short name such as Follow My Dream Set.}
+          - {name: price, label: Price, type: number, default: 0}
+          - {name: sizes, label: Available sizes, type: string, description: Optional, for example 2Y, 3Y, 4Y, 5Y, 6Y.}
+          - name: availability
+            label: Product availability
+            type: select
+            default: available
+            options:
+              values:
+                - {name: available, label: Available}
+                - {name: low-stock, label: Low stock}
+                - {name: sold-out, label: Sold out}
+                - {name: coming-soon, label: Coming soon}
       - {name: startingPrice, label: Starting or special price, type: number, default: 0}
       - {name: stylesCount, label: Number of styles, type: number, default: 0}
       - {name: ageGroup, label: Age group, type: string}
+      - {name: publishedDate, label: Published date, type: date, required: true, description: The New badge appears automatically for the number of days below.}
+      - {name: newBadgeDays, label: Show New badge for this many days, type: number, default: 30}
       - name: status
         label: Availability status
         type: select
@@ -78,10 +120,17 @@ content:
         type: number
         default: 10
         description: Lower numbers appear first.
+      - name: featuredOrder
+        label: Homepage featured order
+        type: number
+        default: 10
+        description: Lower numbers appear first in Latest Catalogues. Used only when Show in homepage is turned on.
       - name: whatsappMessage
         label: WhatsApp order message
         type: text
-        description: Include blanks for SKU, size and quantity. If left empty, the website creates a standard message.
+        description: Optional introduction. Product Code, image link and enquiry reference are added automatically.
+      - {name: seoTitle, label: Google and sharing title, type: string, description: Optional. If empty, the catalogue title and JK Chennai are used.}
+      - {name: seoDescription, label: Google and sharing description, type: text, description: A clear 120–160 character description for Google and social sharing.}
 
   - name: categories
     label: Categories & subcategories

@@ -1,0 +1,39 @@
+name: Duplicate JK Chennai catalogue
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS action payload
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: duplicate-jk-chennai-catalogue
+  cancel-in-progress: false
+
+jobs:
+  duplicate:
+    runs-on: ubuntu-latest
+    env:
+      PAGES_CMS_PAYLOAD: ${{ inputs.payload }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Create hidden catalogue copy
+        run: node scripts/duplicate_catalogue.mjs
+      - name: Build catalogue index
+        run: node scripts/build_catalogue_index.mjs
+      - name: Save duplicated catalogue
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/catalogues content/catalogues.json
+          git commit -m "Duplicate catalogue from Pages CMS"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

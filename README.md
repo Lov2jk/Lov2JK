@@ -47,15 +47,19 @@ Open your Pages CMS dashboard and select **Products — Add or edit**. Every pro
 
 ## Monthly JPG catalogues
 
-Use **Catalogues — add, hide or update** in Pages CMS when a monthly delivery contains many styles. Each catalogue has its own cover, ordered JPG pages, catalogue code, category, price, age group and WhatsApp order message.
+Use **Catalogues — add, hide or update** in Pages CMS when a monthly delivery contains many styles. Each design has a customer-friendly Product Code, image, optional name, price, sizes and availability.
 
 1. Add a catalogue and use a stable URL name such as `september-2026-kids`.
-2. Upload a portrait cover and all JPG pages in browsing order.
+2. Add each image under **Catalogue products and images** and enter its Product Code. Multiple pictures may use the same Product Code.
 3. Keep **Show catalogue on website** off until the collection is ready.
-4. Turn it on to publish. Enable **Show in homepage Latest Catalogues** for up to four important current catalogues.
+4. Turn it on to publish. Enable **Show in homepage Latest Catalogues** for up to four important current catalogues. Use **Homepage featured order** to control their order; lower numbers appear first.
 5. When stock finishes, choose **Temporarily unavailable** or turn website visibility off. The catalogue remains safely stored in Admin and can be reactivated without uploading again.
 
-Customers browse active collections at `/catalogues.html`. A catalogue includes swipe navigation, full-screen viewing, current-image download, sharing and a WhatsApp order message containing its catalogue code. Hidden direct links show a friendly unavailable notice instead of exposing the catalogue.
+Customers browse active collections at `/catalogues.html`. A catalogue includes swipe navigation, full-screen viewing, image download and sharing. **WhatsApp this design** automatically includes the Product Code, direct image link and a unique enquiry reference. Recent references are stored only on that customer's device; the WhatsApp message remains the business record on this static website.
+
+The **New** badge is calculated automatically from **Published date** and **Show New badge for this many days**. To prepare the next month, open an existing catalogue and run **Duplicate for next collection**. The copy starts hidden and marked Coming soon so its images can be replaced safely. Uploaded originals are preserved; the deployment creates smaller WebP copies automatically for customer browsing.
+
+Each published catalogue also receives a dedicated Google/social-sharing page with its own title, description, cover preview, canonical URL and structured product data. Complete **Google and sharing title** and **Google and sharing description** for the best result.
 
 ### Add one product quickly
 

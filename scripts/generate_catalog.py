@@ -9,6 +9,8 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 products = json.loads((ROOT / "content/products.json").read_text(encoding="utf-8"))["products"]
 settings = json.loads((ROOT / "content/settings.json").read_text(encoding="utf-8"))
+catalogues_path = ROOT / "content" / "catalogues.json"
+catalogues = json.loads(catalogues_path.read_text(encoding="utf-8")).get("catalogues", []) if catalogues_path.exists() else []
 category_dir = ROOT / "content" / "categories"
 categories = []
 for category_file in sorted(category_dir.glob("*.json")):
@@ -67,6 +69,7 @@ index_path.write_text(index_html, encoding="utf-8")
 static_pages = ["", "shop.html", "catalogues.html", "about.html", "contact.html", "faq.html", "policies.html", "tracking.html", "catalog.html", "saved.html"]
 urls = [base + page for page in static_pages]
 urls += [base + "products/" + quote(str(p["slug"])) + ".html" for p in products]
+urls += [base + "catalogue-" + quote(str(item["slug"])) + ".html" for item in catalogues if item.get("showOnWebsite") and item.get("status") != "archived"]
 sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 sitemap += "\n".join(f"  <url><loc>{escape(url)}</loc><lastmod>{today}</lastmod></url>" for url in urls)
 sitemap += "\n</urlset>\n"

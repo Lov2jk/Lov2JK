@@ -6,6 +6,7 @@ from PIL import Image, ImageOps
 ROOT = Path(__file__).resolve().parents[1]
 PRODUCTS_PATH = ROOT / "content/products.json"
 SETTINGS_PATH = ROOT / "content/settings.json"
+CATALOGUES_PATH = ROOT / "content/catalogues.json"
 SUPPORTED = {".jpg", ".jpeg", ".png"}
 
 
@@ -42,4 +43,13 @@ for key in ("image", "videoPoster"):
     if promotion.get(key):
         promotion[key] = optimize(promotion[key])
 SETTINGS_PATH.write_text(json.dumps(settings, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+if CATALOGUES_PATH.exists():
+    catalogues = json.loads(CATALOGUES_PATH.read_text(encoding="utf-8"))
+    for catalogue in catalogues.get("catalogues", []):
+        catalogue["coverImage"] = optimize(catalogue.get("coverImage"))
+        for page in catalogue.get("pages", []):
+            if isinstance(page, dict):
+                page["image"] = optimize(page.get("image"))
+    CATALOGUES_PATH.write_text(json.dumps(catalogues, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 print("Created optimized WebP storefront images while preserving original uploads.")
