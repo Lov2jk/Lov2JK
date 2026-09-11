@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {resolveCatalogues} from '../assets/js/catalogue-commerce.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const sourceDir=path.join(root,'content','catalogues');
@@ -10,6 +11,8 @@ const clean=value=>String(value??'').trim();
 const productCodeFromImage=image=>path.basename(clean(image),path.extname(clean(image))).replace(/-(?:image-?)?\d+$/i,'').toUpperCase();
 const files=fs.existsSync(sourceDir)?fs.readdirSync(sourceDir).filter(file=>file.endsWith('.json')).sort():[];
 const catalogues=[],slugs=new Set(),codes=new Set();
+const readContent=name=>JSON.parse(fs.readFileSync(path.join(root,'content',`${name}.json`),'utf8').replace(/^\uFEFF/,''));
+const shop=readContent('products').products||[];
 
 for(const file of files){
   const item=JSON.parse(fs.readFileSync(path.join(sourceDir,file),'utf8').replace(/^\uFEFF/,''));
@@ -29,6 +32,9 @@ for(const file of files){
     if(!image)return null;
     return{
       image,
+      managedProduct:source.managedProduct===true||shop.some(p=>p.sku===clean(source.productCode).toUpperCase()),
+      showOnWebsite:source.showOnWebsite!==false,
+      colors:clean(source.colors),
       productCode:clean(source.productCode).toUpperCase()||productCodeFromImage(image)||`${item.code}-P${index+1}`,
       productName:clean(source.productName),
       price:Math.max(0,Number(source.price)||0),
@@ -54,5 +60,6 @@ for(const file of files){
 }
 
 catalogues.sort((a,b)=>a.displayOrder-b.displayOrder||b.year-a.year||a.title.localeCompare(b.title));
-fs.writeFileSync(outputPath,JSON.stringify({catalogues},null,2)+'\n');
+const resolved=resolveCatalogues(catalogues,shop,{prices:readContent('prices').products,stock:readContent('stock').products,visibility:readContent('visibility').products,variants:readContent('variant-stock').variants});
+fs.writeFileSync(outputPath,JSON.stringify({catalogues:resolved},null,2)+'\n');
 console.log(`Built catalogue index with ${catalogues.length} catalogue(s).`);

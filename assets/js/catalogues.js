@@ -1,6 +1,8 @@
 document.head.insertAdjacentHTML('beforeend','<link rel="stylesheet" href="assets/css/catalogues.css">');
 
 const catalogueState={items:[],current:null,index:0,settings:{},wa:null};
+let commerce;
+const catalogueBagReady=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='assets/js/catalogue-bag.js';script.onload=resolve;script.onerror=reject;document.head.append(script)});
 const catalogueSafe=value=>String(value??'').replace(/[&"'<>]/g,char=>({'&':'&amp;','"':'&quot;',"'":'&#39;','<':'&lt;','>':'&gt;'}[char]));
 const catalogueMoney=value=>Number(value)>0?`₹${Number(value).toLocaleString('en-IN')}`:'';
 const statusLabels={available:'Available','temporarily-unavailable':'Temporarily unavailable','coming-soon':'Coming soon',archived:'Archived'};
@@ -18,7 +20,11 @@ async function loadCatalogues(){
   const response=await fetch('content/catalogues.json',{cache:'no-store'});
   if(!response.ok)throw new Error('Could not load catalogues');
   const data=await response.json();
-  catalogueState.items=data.catalogues||[];
+  commerce=await import('./catalogue-commerce.mjs');
+  await catalogueBagReady;
+  const read=async file=>{const r=await fetch(`content/${file}.json`,{cache:'no-store'});if(!r.ok)throw new Error('Cannot verify current prices and stock');return r.json()};
+  const [shop,prices,stock,visibility,variants]=await Promise.all(['products','prices','stock','visibility','variant-stock'].map(read));
+  catalogueState.items=commerce.resolveCatalogues(data.catalogues||[],shop.products||[],{prices:prices.products,stock:stock.products,visibility:visibility.products,variants:variants.variants});
   return catalogueState.items;
 }
 
@@ -35,7 +41,7 @@ window.renderCatalogueFeature=async function({settings,wa}={}){
     const section=document.createElement('section');
     section.className='wrap section home-catalogues';
     section.id='latest-catalogues';
-    section.innerHTML=`<div class="section-head"><div><p class="eyebrow">Browse more, upload less</p><h2>Latest catalogues</h2><p>Swipe through our newest collections and order any design by Product Code.</p></div><a href="catalogues.html">View all catalogues →</a></div><div class="catalogue-rail">${items.map(item=>catalogueCard(item,true)).join('')}</div>`;
+    section.innerHTML=`<div class="section-head"><div><p class="eyebrow">Fresh styles, ready to explore</p><h2>Latest catalogues</h2><p>Swipe through our newest collections and order any design by Product Code.</p></div><a href="catalogues.html">View all catalogues →</a></div><div class="catalogue-rail">${items.map(item=>catalogueCard(item,true)).join('')}</div>`;
     const trust=document.querySelector('.home-trust'),categories=document.querySelector('#home-categories');
     if(trust)trust.insertAdjacentElement('afterend',section);else if(categories)categories.insertAdjacentElement('beforebegin',section);
   }catch{}
@@ -45,7 +51,7 @@ function catalogueList(items){
   const app=document.querySelector('#catalogue-app');
   const visible=items.filter(item=>item.showOnWebsite);
   const categories=[...new Set(visible.map(item=>item.category).filter(Boolean))].sort();
-  app.innerHTML=`<header class="catalogue-page-head"><p class="eyebrow">JK Chennai collections</p><h1>Browse our latest catalogues.</h1><p>Choose a design and tap WhatsApp. Its Product Code and image link are added automatically.</p></header><div class="catalogue-filters" aria-label="Catalogue filters"><button class="selected" data-category="">All</button>${categories.map(category=>`<button data-category="${catalogueSafe(category)}">${catalogueSafe(category)}</button>`).join('')}</div><p class="catalogue-count" aria-live="polite"></p><div class="catalogue-grid"></div>`;
+  app.innerHTML=`<header class="catalogue-page-head"><p class="eyebrow">JK Chennai collections</p><h1>Browse our latest catalogues.</h1><p>Choose your favourite designs, select sizes and send your catalogue bag on WhatsApp.</p></header><div class="catalogue-filters" aria-label="Catalogue filters"><button class="selected" data-category="">All</button>${categories.map(category=>`<button data-category="${catalogueSafe(category)}">${catalogueSafe(category)}</button>`).join('')}</div><p class="catalogue-count" aria-live="polite"></p><div class="catalogue-grid"></div>`;
   const draw=category=>{
     const filtered=visible.filter(item=>!category||item.category===category);
     app.querySelector('.catalogue-grid').innerHTML=filtered.map(item=>catalogueCard(item)).join('')||'<div class="catalogue-empty"><h2>No active catalogues</h2><p>Please view another category or message JK Chennai.</p></div>';
@@ -53,6 +59,7 @@ function catalogueList(items){
   };
   app.querySelectorAll('.catalogue-filters button').forEach(button=>button.onclick=()=>{app.querySelectorAll('.catalogue-filters button').forEach(item=>item.classList.remove('selected'));button.classList.add('selected');draw(button.dataset.category)});
   draw('');
+  mountCatalogueBag();
 }
 
 function unavailableCatalogue(){
@@ -68,6 +75,7 @@ function renderCurrentProduct(){
   const status=productStatusLabels[page.availability]||'Available';
   box.innerHTML=`<div><span>Product Code</span><strong>${catalogueSafe(page.productCode||catalogueState.current.code)}</strong>${page.productName?`<small>${catalogueSafe(page.productName)}</small>`:''}</div>${page.price?`<div><span>Price</span><strong>${catalogueMoney(page.price)}</strong></div>`:''}${page.sizes?`<div><span>Sizes</span><strong>${catalogueSafe(page.sizes)}</strong></div>`:''}<div><span>Availability</span><strong class="product-status status-${catalogueSafe(page.availability)}">${catalogueSafe(status)}</strong></div>`;
   const order=document.querySelector('#catalogue-product-order');if(order){order.disabled=page.availability==='sold-out';order.textContent=page.availability==='sold-out'?'Currently sold out':'WhatsApp this design'}
+  renderCataloguePurchase();
 }
 
 function renderEnquiryHistory(){
@@ -77,7 +85,7 @@ function renderEnquiryHistory(){
 }
 
 function catalogueDetail(item){
-  if(!item||!item.showOnWebsite){unavailableCatalogue();return}
+  if(!item||!item.showOnWebsite||item.status==='archived'||!item.pages?.length){unavailableCatalogue();return}
   catalogueState.current=item;
   const pages=(item.pages||[]).length?item.pages:[{image:item.coverImage,productCode:item.code}];
   const requestedPage=Math.max(0,Number(new URLSearchParams(location.search).get('page'))-1||0);catalogueState.index=Math.min(requestedPage,pages.length-1);

@@ -72,12 +72,15 @@ content:
             collapsed: true
             summary: "{productCode} — {productName}"
         required: true
-        description: Add every design in display order. Each image gets its own easy customer-facing Product Code.
+        description: Add or remove image rows here. Match a shop Product Code to reuse its current price, sizes and stock. Use Show this image to hide a row without deleting it. Repeat a code for another photo of the same design.
         fields:
           - {name: image, label: Product image, type: image, required: true}
           - {name: productCode, label: Product Code, type: string, required: true, description: Example JKC-D-101. This is shown to customers and included automatically in WhatsApp.}
+          - {name: managedProduct, label: Link to shop product, type: boolean, default: false, description: Enable for an existing shop Product Code. Its shop price and stock are used automatically. Deleting or hiding that shop product also removes it here. Leave off for catalogue-only designs.}
+          - {name: showOnWebsite, label: Show this image, type: boolean, default: true, description: Switch off to hide this image. Hide every image with the same code to hide the whole design.}
           - {name: productName, label: Product name, type: string, description: Optional short name such as Follow My Dream Set.}
-          - {name: price, label: Price, type: number, default: 0}
+          - {name: price, label: Price for catalogue-only designs, type: number, default: 0, description: Linked shop products use Quick price update instead.}
+          - {name: colors, label: Colours for catalogue-only designs, type: string, description: Separate choices with commas. Linked products use their shop colour choices.}
           - {name: sizes, label: Available sizes, type: string, description: Optional, for example 2Y, 3Y, 4Y, 5Y, 6Y.}
           - name: availability
             label: Product availability
