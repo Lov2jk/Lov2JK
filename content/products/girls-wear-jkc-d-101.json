@@ -1,9 +1,9 @@
 {
-  "name": "GIRLS WEAR",
+  "name": "Follow My Dream Kids Set",
   "sku": "JKC-D-101",
   "slug": "girls-wear-jkc-d-101",
   "category": "kids-top-bottom-sets",
-  "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+  "description": "A comfortable kids top and bottom pant set with a playful Follow My Dream print. Made for everyday wear and easy movement.",
   "ageGroup": "2-6 years",
   "price": 499,
   "offerPrice": 349,
@@ -21,5 +21,6 @@
   ],
   "featured": true,
   "visible": true,
-  "available": true
+  "available": true,
+  "advanced": {"material":"Bio-washed fabric · zero shrinkage · colour-fade resistant","included":"1 top + 1 bottom pant set","wholesaleEligible":true}
 }

@@ -1,6 +1,7 @@
 import {
   cleanText,
   normalizeEmail,
+  normalizeInternationalPhone,
   normalizeIndianMobile,
   normalizePincode,
   now,
@@ -279,6 +280,40 @@ function validateReview(form) {
   return { orderItemId, displayName, rating, reviewText };
 }
 
+function validateWholesaleQuote(data) {
+  const contactName = cleanText(data.contactName, 120);
+  const companyName = cleanText(data.companyName, 160);
+  const country = cleanText(data.country, 100);
+  const buyerType = cleanText(data.buyerType, 60);
+  const estimatedQuantity = cleanText(data.estimatedQuantity, 120);
+  const allowedBuyerTypes = ['Retailer / boutique', 'Distributor', 'Importer', 'Online seller', 'Buying agent', 'Other'];
+  if (!contactName || !companyName || !country || !estimatedQuantity || !allowedBuyerTypes.includes(buyerType)) throw new Error('Please complete the required wholesale enquiry fields.');
+  if (data.consent !== true) throw new Error('Please confirm that JK Chennai may contact you about this enquiry.');
+  return { contactName, companyName, email: normalizeEmail(data.email), phone: normalizeInternationalPhone(data.phone), whatsapp: data.whatsapp ? normalizeInternationalPhone(data.whatsapp) : '', country, buyerType, websiteUrl: data.websiteUrl ? safeUrl(data.websiteUrl) : '', productCodes: cleanText(data.productCodes, 700), requestedCategories: cleanText(data.requestedCategories, 300), estimatedQuantity, destination: cleanText(data.destination, 140), message: cleanText(data.message, 1500), turnstileToken: cleanText(data.turnstileToken, 3000) };
+}
+
+async function wholesaleRateLimit(request, env) {
+  const key = await sha256(request.headers.get('cf-connecting-ip') || 'unknown');
+  const existing = await env.DB.prepare('SELECT * FROM wholesale_quote_rate_limits WHERE ip_hash=?').bind(key).first();
+  const current = now();
+  const isRecent = existing && Date.now() - new Date(existing.window_started).getTime() < 60 * 60_000;
+  const count = isRecent ? Number(existing.count) : 0;
+  if (count >= 4) return false;
+  await env.DB.prepare(`INSERT INTO wholesale_quote_rate_limits(ip_hash,window_started,count) VALUES(?,?,?) ON CONFLICT(ip_hash) DO UPDATE SET window_started=excluded.window_started,count=excluded.count`)
+    .bind(key, isRecent ? existing.window_started : current, count + 1).run();
+  return true;
+}
+
+async function findWholesaleQuotes(request, env) {
+  const url = new URL(request.url), q = cleanText(url.searchParams.get('q'), 100), status = cleanText(url.searchParams.get('status'), 30), from = cleanText(url.searchParams.get('from'), 10), to = cleanText(url.searchParams.get('to'), 10);
+  const statuses = ['New', 'Contacted', 'Quoted', 'Closed', 'Not proceeding'];
+  if (status && !statuses.includes(status)) throw new Error('Choose a valid quote status.');
+  const search = `%${q}%`;
+  const rows = await env.DB.prepare(`SELECT * FROM wholesale_quotes WHERE (reference LIKE ? OR contact_name LIKE ? OR company_name LIKE ? OR email LIKE ? OR country LIKE ?) AND (?='' OR status=?) AND (?='' OR date(created_at)>=date(?)) AND (?='' OR date(created_at)<=date(?)) ORDER BY created_at DESC LIMIT 500`)
+    .bind(search, search, search, search, search, status, status, from, from, to, to).all();
+  return rows.results;
+}
+
 async function orderEventsForCustomer(env, customerId) {
   const rows = await env.DB.prepare(`SELECT e.order_id,e.status,e.message,e.created_at
     FROM order_events e JOIN orders o ON o.id=e.order_id
@@ -319,6 +354,18 @@ async function findOwnerOrders(request, env) {
 }
 
 async function customerApi(request, env, path) {
+  if (path === '/api/wholesale-quote-config' && request.method === 'GET') return json(request, env, { enabled: Boolean(env.TURNSTILE_SECRET && env.TURNSTILE_SITE_KEY), turnstileSiteKey: env.TURNSTILE_SITE_KEY || '' });
+  if (path === '/api/wholesale-quotes' && request.method === 'POST') {
+    requireAllowedOrigin(request, env);
+    if (!(await wholesaleRateLimit(request, env))) return json(request, env, { error: 'Too many quote requests. Please try again in one hour.' }, 429);
+    const data = validateWholesaleQuote(await boundedJson(request));
+    await verifyTurnstile(request, env, data.turnstileToken);
+    const id = crypto.randomUUID(), time = now(), reference = `JKC-WQ-${time.slice(0, 10).replace(/-/g, '')}-${randomToken(4).toUpperCase()}`;
+    await env.DB.prepare(`INSERT INTO wholesale_quotes(id,reference,contact_name,company_name,email,phone,whatsapp,country,website_url,buyer_type,product_codes,requested_categories,estimated_quantity,destination,message,consent_confirmed,status,owner_notes,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'New',NULL,?,?)`)
+      .bind(id, reference, data.contactName, data.companyName, data.email, data.phone, data.whatsapp || null, data.country, data.websiteUrl || null, data.buyerType, data.productCodes || null, data.requestedCategories || null, data.estimatedQuantity, data.destination || null, data.message || null, 1, time, time).run();
+    await audit(env, request, 'buyer', data.email, 'wholesale_quote_create', 'wholesale_quote', id, reference);
+    return json(request, env, { ok: true, reference }, 201);
+  }
   if (path === '/api/public/reviews' && request.method === 'GET') {
     const slug = cleanText(new URL(request.url).searchParams.get('product'), 160);
     if (!slug) return json(request, env, { reviews: [] }, 200, { 'cache-control': 'public, max-age=60, s-maxage=300' });
@@ -524,6 +571,24 @@ async function ownerApi(request, env, path) {
   if (path === '/owner/api/orders' && request.method === 'GET') {
     return json(request, env, { orders: await findOwnerOrders(request, env) });
   }
+  if (path === '/owner/api/wholesale-quotes' && request.method === 'GET') return json(request, env, { quotes: await findWholesaleQuotes(request, env) });
+  if (path === '/owner/api/wholesale-quotes.csv' && request.method === 'GET') {
+    const rows = await findWholesaleQuotes(request, env);
+    const headers = ['Reference','Date','Contact','Company','Email','Phone','WhatsApp','Country','Buyer type','Product codes','Categories','Estimated quantity','Destination','Website','Message','Consent','Status','Owner notes'];
+    const body = [headers, ...rows.map(row => [row.reference,row.created_at,row.contact_name,row.company_name,row.email,row.phone,row.whatsapp,row.country,row.buyer_type,row.product_codes,row.requested_categories,row.estimated_quantity,row.destination,row.website_url,row.message,row.consent_confirmed?'Yes':'No',row.status,row.owner_notes])].map(row => row.map(csvCell).join(',')).join('\n');
+    await audit(env, request, 'owner', auth.current.owner_username, 'wholesale_quote_export', 'wholesale_quote', '', `${rows.length} row(s)`);
+    return new Response(body, { headers: { ...securityHeaders(), 'content-type': 'text/csv;charset=utf-8', 'content-disposition': 'attachment; filename="jk-chennai-wholesale-quotes.csv"' } });
+  }
+  const quoteMatch = path.match(/^\/owner\/api\/wholesale-quotes\/([^/]+)$/);
+  if (quoteMatch && request.method === 'PATCH') {
+    const data = await boundedJson(request), status = cleanText(data.status, 30);
+    if (!['New', 'Contacted', 'Quoted', 'Closed', 'Not proceeding'].includes(status)) throw new Error('Choose a valid quote status.');
+    const reference = decodeURIComponent(quoteMatch[1]);
+    const result = await env.DB.prepare('UPDATE wholesale_quotes SET status=?,owner_notes=?,updated_at=? WHERE reference=?').bind(status, cleanText(data.ownerNotes, 1500) || null, now(), reference).run();
+    if (!result.meta.changes) return json(request, env, { error: 'Wholesale enquiry not found.' }, 404);
+    await audit(env, request, 'owner', auth.current.owner_username, 'wholesale_quote_update', 'wholesale_quote', reference, status);
+    return json(request, env, { ok: true });
+  }
   if (path === '/owner/api/orders.csv' && request.method === 'GET') {
     const rows = await findOwnerOrders(request, env);
     const headers = ['Reference','Date','Customer','Mobile','Email','Items','Items total','Shipping','Status','Payment status','Payment method','Payment reference','Tracking URL','PIN code','Address','Customer notes','Owner notes'];
@@ -593,6 +658,10 @@ let csrf='';const statuses=${JSON.stringify(ORDER_STATUSES)},payments=${JSON.str
   </script></body></html>`;
 }
 
+function ownerWholesalePage() {
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Wholesale enquiries | JK Chennai</title>${ownerCss}</head><body><main class="wrap"><header class="toolbar"><div class="brand">JK <span>Chennai</span></div><b>Wholesale enquiries</b><a class="button secondary" href="/owner">Orders dashboard</a><button id="logout" class="secondary" hidden>Logout</button></header><section id="loginCard" class="card" style="max-width:480px"><h1>Owner login</h1><p>Use your private JK Chennai owner login.</p><form id="login"><label>Username<input name="username" required autocomplete="username"></label><label>Password<input type="password" name="password" required autocomplete="current-password"></label><p><button>Open enquiries</button></p><p id="loginMessage" class="message error"></p></form></section><section id="dashboard" hidden><div class="card"><div class="toolbar"><h1>International buyer quote requests</h1><button id="export" class="secondary">Export CSV</button></div><div class="filters"><label>Search<input id="search" placeholder="Reference, company, email or country"></label><label>Status<select id="status"><option value="">All statuses</option><option>New</option><option>Contacted</option><option>Quoted</option><option>Closed</option><option>Not proceeding</option></select></label><label>From<input id="from" type="date"></label><label>To<input id="to" type="date"></label><button id="find">Apply</button></div><p id="message" class="message"></p><div class="scroll"><table><thead><tr><th>Buyer</th><th>Request</th><th>Contact</th><th>Status & notes</th><th>Save</th></tr></thead><tbody id="rows"></tbody></table></div></div></section></main><script>const $=s=>document.querySelector(s);let csrf='';const esc=v=>String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));const call=async(path,options={})=>{const r=await fetch(path,{...options,credentials:'include',headers:{'content-type':'application/json','x-csrf-token':csrf,...(options.headers||{})}}),d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'Request failed.');return d};function query(){return new URLSearchParams({q:$('#search').value.trim(),status:$('#status').value,from:$('#from').value,to:$('#to').value})}async function load(){try{$('#message').textContent='Loading…';const d=await call('/owner/api/wholesale-quotes?'+query());$('#rows').innerHTML=d.quotes.map(x=>'<tr><td><b>'+esc(x.company_name)+'</b><br>'+esc(x.contact_name)+'<br><small>'+esc(x.country)+' · '+esc(x.buyer_type)+'</small></td><td><b>'+esc(x.reference)+'</b><br><small>'+new Date(x.created_at).toLocaleString()+'</small><br>Codes: '+esc(x.product_codes||'—')+'<br>Quantity: '+esc(x.estimated_quantity)+'</td><td><a href="mailto:'+esc(x.email)+'">'+esc(x.email)+'</a><br>'+esc(x.phone)+(x.whatsapp?'<br>WhatsApp: '+esc(x.whatsapp):'')+(x.website_url?'<br><a target="_blank" rel="noopener" href="'+esc(x.website_url)+'">Website</a>':'')+'</td><td><select data-status><option '+(x.status==='New'?'selected':'')+'>New</option><option '+(x.status==='Contacted'?'selected':'')+'>Contacted</option><option '+(x.status==='Quoted'?'selected':'')+'>Quoted</option><option '+(x.status==='Closed'?'selected':'')+'>Closed</option><option '+(x.status==='Not proceeding'?'selected':'')+'>Not proceeding</option></select><textarea data-notes placeholder="Private notes">'+esc(x.owner_notes||'')+'</textarea><details><summary>Buyer message</summary>'+esc(x.message||'No extra message.')+'</details></td><td><button data-save="'+esc(x.reference)+'">Save</button></td></tr>').join('')||'<tr><td colspan="5">No wholesale enquiries found.</td></tr>';$('#message').textContent='';document.querySelectorAll('[data-save]').forEach(b=>b.onclick=async()=>{try{b.disabled=true;const row=b.closest('tr');await call('/owner/api/wholesale-quotes/'+encodeURIComponent(b.dataset.save),{method:'PATCH',body:JSON.stringify({status:row.querySelector('[data-status]').value,ownerNotes:row.querySelector('[data-notes]').value})});$('#message').textContent='Saved.'}catch(e){$('#message').textContent=e.message;$('#message').className='message error'}finally{b.disabled=false}})}catch(e){$('#message').textContent=e.message;$('#message').className='message error'}}async function start(){try{const d=await call('/owner/api/session');csrf=d.csrf;$('#loginCard').hidden=true;$('#dashboard').hidden=false;$('#logout').hidden=false;load()}catch{}}$('#login').onsubmit=async e=>{e.preventDefault();try{const f=new FormData(e.target),r=await fetch('/owner/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({username:f.get('username'),password:f.get('password')})}),d=await r.json();if(!r.ok)throw Error(d.error);csrf=d.csrf;$('#loginCard').hidden=true;$('#dashboard').hidden=false;$('#logout').hidden=false;load()}catch(e){$('#loginMessage').textContent=e.message}};$('#find').onclick=load;$('#export').onclick=()=>location='/owner/api/wholesale-quotes.csv?'+query();$('#logout').onclick=async()=>{await call('/owner/api/logout',{method:'POST',body:'{}'});location.reload()};start();</script></body></html>`;
+}
+
 function ownerPasswordEnhancement(html) {
   const addition = `<style>dialog{border:0;border-radius:18px;padding:0;box-shadow:0 24px 70px #0005}dialog::backdrop{background:#071a2699}.password-card{width:min(430px,88vw);margin:0}.password-card .toolbar{justify-content:flex-end}</style><script>(()=>{const logoutButton=document.getElementById('logout'),button=document.createElement('button');button.id='changePassword';button.className='secondary';button.textContent='Change password';button.hidden=logoutButton.hidden;logoutButton.before(button);new MutationObserver(()=>button.hidden=logoutButton.hidden).observe(logoutButton,{attributes:true,attributeFilter:['hidden']});document.body.insertAdjacentHTML('beforeend','<dialog id="passwordDialog"><form id="passwordForm" class="card password-card"><h2>Change owner password</h2><p>Use at least 12 characters. A longer passphrase is easier to remember and safer.</p><label>New password<input name="password" type="password" minlength="12" maxlength="200" required autocomplete="new-password"></label><label>Confirm password<input name="confirmPassword" type="password" minlength="12" maxlength="200" required autocomplete="new-password"></label><div class="toolbar"><button type="button" class="secondary" id="cancelPassword">Cancel</button><button>Save password</button></div><p id="passwordMessage" class="message"></p></form></dialog>');const dialog=document.getElementById('passwordDialog'),form=document.getElementById('passwordForm'),message=document.getElementById('passwordMessage');button.onclick=()=>dialog.showModal();document.getElementById('cancelPassword').onclick=()=>dialog.close();form.onsubmit=async event=>{event.preventDefault();const data=Object.fromEntries(new FormData(form));if(data.password!==data.confirmPassword){message.className='message error';message.textContent='The two passwords do not match.';return}try{await call('/owner/api/password',{method:'POST',body:JSON.stringify({password:data.password})});message.className='message ok';message.textContent='Password changed successfully.';form.reset();setTimeout(()=>dialog.close(),900)}catch(error){message.className='message error';message.textContent=error.message}}})()</script>`;
   return html.replace('</body>', `${addition}</body>`);
@@ -629,6 +698,7 @@ export default {
       if (path.startsWith('/api/')) return customerApi(request, env, path);
       if (path.startsWith('/owner/api/')) return ownerApi(request, env, path);
       if (path === '/owner' || path === '/owner/orders') return new Response(ownerPasswordEnhancement(ownerPage()).replace('</head>', '<style>[hidden]{display:none!important}</style></head>'), { headers: { 'content-type': 'text/html;charset=utf-8', ...securityHeaders() } });
+      if (path === '/owner/wholesale') return new Response(ownerPasswordEnhancement(ownerWholesalePage()).replace('</head>', '<style>[hidden]{display:none!important}</style></head>'), { headers: { 'content-type': 'text/html;charset=utf-8', ...securityHeaders() } });
       return redirect(`${env.SITE_ORIGIN}/account.html`);
     } catch (error) {
       console.error(JSON.stringify({ message: 'request_failed', path, method: request.method, error: error instanceof Error ? error.message : String(error) }));

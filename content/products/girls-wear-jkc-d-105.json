@@ -1,9 +1,9 @@
 {
-  "name": "GIRLS WEAR",
+  "name": "Explore Kids Set",
   "sku": "JKC-D-105",
   "slug": "girls-wear-jkc-d-105",
   "category": "kids-top-bottom-sets",
-  "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+  "description": "An Explore print kids top and bottom pant set with a comfortable fit for growing children.",
   "ageGroup": "2-6 years",
   "price": 499,
   "offerPrice": 349,
@@ -17,5 +17,6 @@
   ],
   "featured": true,
   "visible": true,
-  "available": true
+  "available": true,
+  "advanced": {"material":"Bio-washed fabric · zero shrinkage · colour-fade resistant","included":"1 top + 1 bottom pant set","wholesaleEligible":true}
 }

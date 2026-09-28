@@ -1,9 +1,9 @@
 {
-  "name": "GIRLS WEAR",
+  "name": "Love Bees Kids Set",
   "sku": "JKC-D-102",
   "slug": "girls-wear-jkc-d-102",
   "category": "kids-top-bottom-sets",
-  "description": "?? Bio-Washed Fabric\n? Zero Shrinkage\n? Colour-Fade Resistant\n? Top-Notch Quality\n? Super Stylish Prints\n? Premium Finishing\n? Comfortable Kids Wear\n\n?? QUALITY GUARANTEE:",
+  "description": "A cheerful Love Bees kids top and bottom pant set, designed for comfortable everyday play.",
   "ageGroup": "2-6 years",
   "price": 499,
   "offerPrice": 349,
@@ -18,5 +18,6 @@
   "images": [],
   "featured": true,
   "visible": true,
-  "available": true
+  "available": true,
+  "advanced": {"material":"Bio-washed fabric · zero shrinkage · colour-fade resistant","included":"1 top + 1 bottom pant set","wholesaleEligible":true}
 }

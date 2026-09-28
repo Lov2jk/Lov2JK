@@ -55,6 +55,11 @@ export async function passwordVerify(password, user) {
   const actual = [...new Uint8Array(bits)].map(byte => byte.toString(16).padStart(2, '0')).join('');
   return secureEqual(actual, user.password_hash);
 }
+export function normalizeInternationalPhone(value) {
+  const digits = String(value ?? '').replace(/\D/g, '');
+  if (!/^\d{7,15}$/.test(digits)) throw new Error('Enter a valid phone or WhatsApp number with country code.');
+  return `+${digits}`;
+}
 
 export async function passwordHash(password, salt = randomToken(18), iterations = 100000) {
   const key = await crypto.subtle.importKey('raw', encoder.encode(String(password)), 'PBKDF2', false, ['deriveBits']);

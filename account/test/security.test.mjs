@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cleanText, normalizeEmail, normalizeIndianMobile, normalizePincode, passwordHash, passwordVerify, randomToken, secureEqual } from '../src/security.js';
+import { cleanText, normalizeEmail, normalizeIndianMobile, normalizeInternationalPhone, normalizePincode, passwordHash, passwordVerify, randomToken, secureEqual } from '../src/security.js';
 
 test('normalizes Indian contact details', () => {
   assert.equal(normalizeEmail(' Buyer@Example.COM '), 'buyer@example.com');
@@ -34,6 +34,12 @@ test('verifies an existing CRM-compatible PBKDF2 password', async () => {
   const user = { password_hash, password_salt: salt, password_iterations: iterations };
   assert.equal(await passwordVerify('correct-password', user), true);
   assert.equal(await passwordVerify('wrong-password', user), false);
+});
+
+test('normalizes international wholesale contact numbers', () => {
+  assert.equal(normalizeInternationalPhone('+91 93635 29266'), '+919363529266');
+  assert.equal(normalizeInternationalPhone('44 20 7946 0958'), '+442079460958');
+  assert.throws(() => normalizeInternationalPhone('1234'));
 });
 
 test('creates a CRM-compatible owner password hash', async () => {

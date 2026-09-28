@@ -292,6 +292,9 @@ content:
         type: object
         fields:
           - {name: material, label: Material or product details, type: text}
+          - {name: wholesaleEligible, label: Show in wholesale enquiries, type: boolean, default: true}
+          - {name: wholesaleMinimum, label: Wholesale minimum order note, type: string}
+          - {name: wholesaleNotes, label: Wholesale buyer notes, type: text}
           - {name: care, label: Care instructions, type: text}
           - {name: measurements, label: Measurements and fit, type: text}
           - {name: included, label: What is included, type: text}

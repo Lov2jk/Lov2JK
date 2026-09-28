@@ -18,7 +18,7 @@ if(migrate){
   for(const [catalogOrder,source] of (legacy.products||[]).entries()){
     if(!slugPattern.test(clean(source.slug)))throw new Error(`Cannot migrate invalid product slug: ${source.slug}`);
     const advanced={},display={};
-    for(const key of ['videoUrl','videoPoster','material','care','measurements','included','deliveryInfo','returnInfo','safetyInfo','sizeGuide']){
+    for(const key of ['videoUrl','videoPoster','material','care','measurements','included','deliveryInfo','returnInfo','safetyInfo','sizeGuide','wholesaleEligible','wholesaleMinimum','wholesaleNotes']){
       if(source[key]!==undefined&&source[key]!==''&&!(Array.isArray(source[key])&&!source[key].length))advanced[key]=source[key];
     }
     const basic={...source,catalogOrder:source.catalogOrder||catalogOrder+1};
