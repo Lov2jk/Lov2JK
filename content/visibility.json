@@ -1,69 +1,69 @@
 {
   "products": [
     {
-      "name": "GIRLS WEAR",
-      "slug": "girls-wear-jkc-d-101",
-      "sku": "JKC-D-101",
-      "visible": true
-    },
-    {
-      "name": "GIRLS WEAR",
-      "slug": "girls-wear-jkc-d-102",
-      "sku": "JKC-D-102",
-      "visible": true
-    },
-    {
-      "name": "GIRLS WEAR",
-      "slug": "girls-wear-jkc-d-103",
-      "sku": "JKC-D-103",
-      "visible": true
-    },
-    {
-      "name": "GIRLS WEAR",
-      "slug": "girls-wear-jkc-d-104",
-      "sku": "JKC-D-104",
-      "visible": true
-    },
-    {
-      "name": "GIRLS WEAR",
-      "slug": "girls-wear-jkc-d-105",
-      "sku": "JKC-D-105",
-      "visible": true
-    },
-    {
-      "name": "GIRLS WEAR",
-      "slug": "girls-wear-jkc-d-106",
-      "sku": "JKC-D-106",
-      "visible": true
-    },
-    {
-      "name": "GIRLS WEAR",
-      "slug": "girls-wear-jkc-d-107",
-      "sku": "JKC-D-107",
-      "visible": true
-    },
-    {
-      "name": "GIRLS WEAR",
+      "name": "Dreams Kids Set",
       "slug": "girls-wear-jkc-d-108",
       "sku": "JKC-D-108",
       "visible": true
     },
     {
-      "name": "GIRLS WEAR",
+      "name": "Explore Kids Set",
+      "slug": "girls-wear-jkc-d-105",
+      "sku": "JKC-D-105",
+      "visible": true
+    },
+    {
+      "name": "Follow My Dream Kids Set",
+      "slug": "girls-wear-jkc-d-101",
+      "sku": "JKC-D-101",
+      "visible": true
+    },
+    {
+      "name": "Happy Kids Set",
       "slug": "girls-wear-jkc-d-109",
       "sku": "JKC-D-109",
       "visible": true
     },
     {
-      "name": "GIRLS WEAR",
+      "name": "Imagine Kids Set",
+      "slug": "girls-wear-jkc-d-107",
+      "sku": "JKC-D-107",
+      "visible": true
+    },
+    {
+      "name": "Love Bees Kids Set",
+      "slug": "girls-wear-jkc-d-102",
+      "sku": "JKC-D-102",
+      "visible": true
+    },
+    {
+      "name": "Nice Day Kids Set",
+      "slug": "girls-wear-jkc-d-106",
+      "sku": "JKC-D-106",
+      "visible": true
+    },
+    {
+      "name": "Pretty Bow Kids Set",
       "slug": "girls-wear-jkc-d-110",
       "sku": "JKC-D-110",
       "visible": true
     },
     {
-      "name": "GIRLS WEAR",
+      "name": "Rainbow Kids Set",
       "slug": "girls-wear-jkc-d-111",
       "sku": "JKC-D-111",
+      "visible": true
+    },
+    {
+      "name": "Stay Strong Kids Set",
+      "slug": "girls-wear-jkc-d-104",
+      "sku": "JKC-D-104",
+      "visible": true
+    },
+    {
+      "name": "Style Girl Kids Set",
+      "slug": "girls-wear-jkc-d-103",
+      "sku": "JKC-D-103",
       "visible": true
     }
   ]
